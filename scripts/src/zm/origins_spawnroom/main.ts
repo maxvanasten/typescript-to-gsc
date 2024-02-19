@@ -1,19 +1,25 @@
-import Core, { if_statement } from '../../../../../library/core';
-import Player from '../../../../../library/player';
+import Core, { if_statement } from '../../../../library/core';
+import Player from '../../../../library/player';
 
-import Weapons from '../../../../../library/lists/weapons';
-import Perks from '../../../../../library/lists/perks';
+import Weapons from '../../../../library/lists/weapons';
+import Perks from '../../../../library/lists/perks';
 
-const gungame_weapons = [
+export const gungame_weapons = [
 	Weapons.zm_tomb.c96.default,
 	Weapons.zm_tomb.beretta93r.default,
 	Weapons.zm_tomb.fiveseven.default,
 	Weapons.zm_tomb.kard.default,
 
 	Weapons.zm_tomb.ksg.default,
+	Weapons.zm_tomb.m14.default,
+
 	Weapons.zm_tomb.r870mcs.default,
 	Weapons.zm_tomb.m1216.default,
 
+	Weapons.zm_tomb.dsr50.default,
+	Weapons.zm_tomb.ballista.default,
+
+	Weapons.zm_tomb.m32.default,
 	Weapons.zm_tomb.mp40.default,
 	Weapons.zm_tomb.fnfal.default,
 	Weapons.zm_tomb.ak74u.extclip,

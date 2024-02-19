@@ -42,8 +42,12 @@ gpp_init()
 	self.gungame_weapons[self.gungame_weapons.size] = "fiveseven_zm";
 	self.gungame_weapons[self.gungame_weapons.size] = "kard_zm";
 	self.gungame_weapons[self.gungame_weapons.size] = "ksg_zm";
+	self.gungame_weapons[self.gungame_weapons.size] = "m14_zm";
 	self.gungame_weapons[self.gungame_weapons.size] = "870mcs_zm";
 	self.gungame_weapons[self.gungame_weapons.size] = "srm1216_zm";
+	self.gungame_weapons[self.gungame_weapons.size] = "dsr50_zm";
+	self.gungame_weapons[self.gungame_weapons.size] = "ballista_zm";
+	self.gungame_weapons[self.gungame_weapons.size] = "m32_zm";
 	self.gungame_weapons[self.gungame_weapons.size] = "mp40_zm";
 	self.gungame_weapons[self.gungame_weapons.size] = "fnfal_zm";
 	self.gungame_weapons[self.gungame_weapons.size] = "ak74u_extclip_zm";
@@ -69,49 +73,54 @@ gpp_init()
 	self iprintlnbold("^5Get ^1kills ^5to upgrade your weapon!");
 	// init() on HudElement 'osc_hud_total_kills'
 	self.gpp_ui_osc_hud_total_kills = createFontString("objective", 1.5);
-	self.gpp_ui_osc_hud_total_kills setPoint("CENTER", "CENTER", -225, -200);
+	self.gpp_ui_osc_hud_total_kills setPoint("CENTER", "CENTER", -225, -205);
 	self.gpp_ui_osc_hud_total_kills.alpha = 1;
 	self.gpp_ui_osc_hud_total_kills.hidewheninmenu = true;
 	self.gpp_ui_osc_hud_total_kills.hidewhendead = true;
 	self.gpp_ui_osc_hud_total_kills.color = (1, 1, 1);
-	self.gpp_ui_osc_hud_total_kills setText("Loading...");
-	self.gpp_ui_osc_hud_total_kills.stored_text = "Loading...";
+	self.gpp_ui_osc_hud_total_kills setValue(0);
+	self.gpp_ui_osc_hud_total_kills.label = &"Total kills: ^5";
+	self.gpp_ui_osc_hud_total_kills.stored_value = 0;
 	// init() on HudElement 'osc_hud_weapon_kills'
 	self.gpp_ui_osc_hud_weapon_kills = createFontString("objective", 1.5);
-	self.gpp_ui_osc_hud_weapon_kills setPoint("CENTER", "CENTER", -225, -185);
+	self.gpp_ui_osc_hud_weapon_kills setPoint("CENTER", "CENTER", -225, -190);
 	self.gpp_ui_osc_hud_weapon_kills.alpha = 1;
 	self.gpp_ui_osc_hud_weapon_kills.hidewheninmenu = true;
 	self.gpp_ui_osc_hud_weapon_kills.hidewhendead = true;
 	self.gpp_ui_osc_hud_weapon_kills.color = (1, 1, 1);
-	self.gpp_ui_osc_hud_weapon_kills setText("Loading...");
-	self.gpp_ui_osc_hud_weapon_kills.stored_text = "Loading...";
+	self.gpp_ui_osc_hud_weapon_kills setValue(0);
+	self.gpp_ui_osc_hud_weapon_kills.label = &"Weapon kills left: ^4";
+	self.gpp_ui_osc_hud_weapon_kills.stored_value = 0;
 	// init() on HudElement 'osc_hud_weapon'
 	self.gpp_ui_osc_hud_weapon = createFontString("objective", 1.5);
-	self.gpp_ui_osc_hud_weapon setPoint("CENTER", "CENTER", -225, -170);
+	self.gpp_ui_osc_hud_weapon setPoint("CENTER", "CENTER", -225, -175);
 	self.gpp_ui_osc_hud_weapon.alpha = 1;
 	self.gpp_ui_osc_hud_weapon.hidewheninmenu = true;
 	self.gpp_ui_osc_hud_weapon.hidewhendead = true;
 	self.gpp_ui_osc_hud_weapon.color = (1, 1, 1);
-	self.gpp_ui_osc_hud_weapon setText("Loading...");
-	self.gpp_ui_osc_hud_weapon.stored_text = "Loading...";
+	self.gpp_ui_osc_hud_weapon setValue(0);
+	self.gpp_ui_osc_hud_weapon.label = &"^7Weapons left: ^3";
+	self.gpp_ui_osc_hud_weapon.stored_value = 0;
 	// init() on HudElement 'health_counter'
 	self.gpp_ui_health_counter = createFontString("objective", 1.5);
-	self.gpp_ui_health_counter setPoint("CENTER", "CENTER", 0, 225);
+	self.gpp_ui_health_counter setPoint("CENTER", "CENTER", 0, 200);
 	self.gpp_ui_health_counter.alpha = 1;
 	self.gpp_ui_health_counter.hidewheninmenu = true;
 	self.gpp_ui_health_counter.hidewhendead = true;
 	self.gpp_ui_health_counter.color = (1, 1, 1);
-	self.gpp_ui_health_counter setText(undefined);
-	self.gpp_ui_health_counter.stored_text = undefined;
+	self.gpp_ui_health_counter setValue(0);
+	self.gpp_ui_health_counter.label = &"Health: ^6";
+	self.gpp_ui_health_counter.stored_value = 0;
 	// init() on HudElement 'zombie_counter'
 	self.gpp_ui_zombie_counter = createFontString("objective", 1.5);
-	self.gpp_ui_zombie_counter setPoint("CENTER", "CENTER", 0, 240);
+	self.gpp_ui_zombie_counter setPoint("CENTER", "CENTER", 0, 215);
 	self.gpp_ui_zombie_counter.alpha = 1;
 	self.gpp_ui_zombie_counter.hidewheninmenu = true;
 	self.gpp_ui_zombie_counter.hidewhendead = true;
 	self.gpp_ui_zombie_counter.color = (1, 1, 1);
-	self.gpp_ui_zombie_counter setText(undefined);
-	self.gpp_ui_zombie_counter.stored_text = undefined;
+	self.gpp_ui_zombie_counter setValue(0);
+	self.gpp_ui_zombie_counter.label = &"Zombies: ^1";
+	self.gpp_ui_zombie_counter.stored_value = 0;
 }
 
 gpp_update()
@@ -137,7 +146,7 @@ gpp_update()
 		// setValue() on player
 		self.score = 0;
 	}
-	self thread gpp_custom_update_total_kills_hud();
+	self thread gpp_custom_update_hud_total_kills();
 	// if_statement()
 	if (self.finished == 1)
 	{
@@ -148,59 +157,13 @@ gpp_update()
 	}
 	else
 	{
-		// update() on HudElement 'osc_hud_weapon_kills'
-		if (self.gpp_ui_osc_hud_weapon_kills.stored_text != "Progress: "+self.weapon_kills+"/12")
-		{
-			self.gpp_ui_osc_hud_weapon_kills setText("Progress: "+self.weapon_kills+"/12");
-			self.gpp_ui_osc_hud_weapon_kills.stored_text = "Progress: "+self.weapon_kills+"/12";
-		}
-		// update() on HudElement 'osc_hud_weapon'
-		if (self.gpp_ui_osc_hud_weapon.stored_text != "Weapon: ^5"+self.gun_index+"^7/"+self.gungame_weapons.size)
-		{
-			self.gpp_ui_osc_hud_weapon setText("Weapon: ^5"+self.gun_index+"^7/"+self.gungame_weapons.size);
-			self.gpp_ui_osc_hud_weapon.stored_text = "Weapon: ^5"+self.gun_index+"^7/"+self.gungame_weapons.size;
-		}
+		self thread gpp_custom_update_hud_weapon_kills();
+		self thread gpp_custom_update_hud_weapon();
 	}
-	// if_statement()
-	if (self.health < 50)
-	{
-		// update() on HudElement 'health_counter'
-		if (self.gpp_ui_health_counter.stored_text != "Health: ^1"+self.health)
-		{
-			self.gpp_ui_health_counter setText("Health: ^1"+self.health);
-			self.gpp_ui_health_counter.stored_text = "Health: ^1"+self.health;
-		}
-	}
-	else
-	{
-		// update() on HudElement 'health_counter'
-		if (self.gpp_ui_health_counter.stored_text != "Health: ^5"+self.health)
-		{
-			self.gpp_ui_health_counter setText("Health: ^5"+self.health);
-			self.gpp_ui_health_counter.stored_text = "Health: ^5"+self.health;
-		}
-	}
+	self thread gpp_custom_update_hud_health_counter();
 	// setValue() on player
 	self.zombies_left = level.zombie_total + get_current_zombie_count();
-	// if_statement()
-	if (self.zombies_left <= 3)
-	{
-		// update() on HudElement 'zombie_counter'
-		if (self.gpp_ui_zombie_counter.stored_text != "Zombies: ^1"+self.zombies_left)
-		{
-			self.gpp_ui_zombie_counter setText("Zombies: ^1"+self.zombies_left);
-			self.gpp_ui_zombie_counter.stored_text = "Zombies: ^1"+self.zombies_left;
-		}
-	}
-	else
-	{
-		// update() on HudElement 'zombie_counter'
-		if (self.gpp_ui_zombie_counter.stored_text != "Zombies: ^5"+self.zombies_left)
-		{
-			self.gpp_ui_zombie_counter setText("Zombies: ^5"+self.zombies_left);
-			self.gpp_ui_zombie_counter.stored_text = "Zombies: ^5"+self.zombies_left;
-		}
-	}
+	self thread gpp_custom_update_hud_zombie_counter();
 }
 
 gpp_custom_give_perks()
@@ -274,14 +237,58 @@ gpp_custom_check_kills()
 	}
 }
 
-gpp_custom_update_total_kills_hud()
+gpp_custom_update_hud_total_kills()
 {
 	// update() on HudElement 'osc_hud_total_kills'
-	if (self.gpp_ui_osc_hud_total_kills.stored_text != "Total kills: ^5"+self.kills)
+	if (self.gpp_ui_osc_hud_total_kills.stored_value != self.kills)
 	{
-		self.gpp_ui_osc_hud_total_kills setText("Total kills: ^5"+self.kills);
-		self.gpp_ui_osc_hud_total_kills.stored_text = "Total kills: ^5"+self.kills;
+		self.gpp_ui_osc_hud_total_kills setValue(self.kills);
+		self.gpp_ui_osc_hud_total_kills.stored_value = self.kills;
 	}
-	wait 0.15;
+	wait 0.5;
+}
+
+gpp_custom_update_hud_weapon_kills()
+{
+	// update() on HudElement 'osc_hud_weapon_kills'
+	if (self.gpp_ui_osc_hud_weapon_kills.stored_value != 12 - self.weapon_kills)
+	{
+		self.gpp_ui_osc_hud_weapon_kills setValue(12 - self.weapon_kills);
+		self.gpp_ui_osc_hud_weapon_kills.stored_value = 12 - self.weapon_kills;
+	}
+	wait 0.5;
+}
+
+gpp_custom_update_hud_weapon()
+{
+	// update() on HudElement 'osc_hud_weapon'
+	if (self.gpp_ui_osc_hud_weapon.stored_value != 23 - self.gun_index)
+	{
+		self.gpp_ui_osc_hud_weapon setValue(23 - self.gun_index);
+		self.gpp_ui_osc_hud_weapon.stored_value = 23 - self.gun_index;
+	}
+	wait 0.5;
+}
+
+gpp_custom_update_hud_health_counter()
+{
+	// update() on HudElement 'health_counter'
+	if (self.gpp_ui_health_counter.stored_value != self.health)
+	{
+		self.gpp_ui_health_counter setValue(self.health);
+		self.gpp_ui_health_counter.stored_value = self.health;
+	}
+	wait 0.5;
+}
+
+gpp_custom_update_hud_zombie_counter()
+{
+	// update() on HudElement 'zombie_counter'
+	if (self.gpp_ui_zombie_counter.stored_value != self.zombies_left)
+	{
+		self.gpp_ui_zombie_counter setValue(self.zombies_left);
+		self.gpp_ui_zombie_counter.stored_value = self.zombies_left;
+	}
+	wait 0.5;
 }
 

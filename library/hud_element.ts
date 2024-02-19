@@ -59,6 +59,16 @@ export interface HudOptions {
 	point: Point;
 	font: Font;
 
+	type?: 'number' | 'string';
+	value?: number;
+	label?: string;
+
+	color?: {
+		r: number;
+		g: number;
+		b: number;
+	};
+
 	alpha?: number;
 	hidewheninmenu?: boolean;
 	hidewhendead?: boolean;
@@ -120,11 +130,21 @@ export default class HudElement {
 		output.push(`self.gpp_ui_${this.options.name}.hidewhendead = ${this.options.hidewhendead || true};`);
 
 		// Color
-		output.push(`self.gpp_ui_${this.options.name}.color = (1, 1, 1);`);
+		if (this.options.color) {
+			output.push(`self.gpp_ui_${this.options.name}.color = (${this.options.color.r}, ${this.options.color.g}, ${this.options.color.b});`);
+		} else {
+			output.push(`self.gpp_ui_${this.options.name}.color = (1, 1, 1);`);
+		}
 
 		// Text
-		output.push(`self.gpp_ui_${this.options.name} setText(${this.options.text});`);
-		output.push(`self.gpp_ui_${this.options.name}.stored_text = ${this.options.text};`);
+		if (this.options.type && this.options.type == 'number') {
+			output.push(`self.gpp_ui_${this.options.name} setValue(${this.options.value || 0});`);
+			output.push(`self.gpp_ui_${this.options.name}.label = &"${this.options.label || 'unlabeled'}";`);
+			output.push(`self.gpp_ui_${this.options.name}.stored_value = ${this.options.value};`);
+		} else {
+			output.push(`self.gpp_ui_${this.options.name} setText(${this.options.text});`);
+			output.push(`self.gpp_ui_${this.options.name}.stored_text = ${this.options.text};`);
+		}
 
 		return output;
 	}
@@ -136,18 +156,28 @@ export default class HudElement {
 	 *     hud_element.update(`"Player Score: " + self.score`),
 	 * ];
 	 */
-	update(new_text: string) {
+	update(new_value: string) {
 		let output = [
 			`// update() on HudElement '${this.options.name}'`
 		];
 
-		output.push(`if (self.gpp_ui_${this.options.name}.stored_text != ${new_text})`);
-		output.push(`{`);
+		if (this.options.type && this.options.type == 'number') {
+			output.push(`if (self.gpp_ui_${this.options.name}.stored_value != ${new_value})`);
+			output.push(`{`);
 
-		output.push(`\tself.gpp_ui_${this.options.name} setText(${new_text});`);
-		output.push(`\tself.gpp_ui_${this.options.name}.stored_text = ${new_text};`);
+			output.push(`\tself.gpp_ui_${this.options.name} setValue(${new_value});`);
+			output.push(`\tself.gpp_ui_${this.options.name}.stored_value = ${new_value};`);
 
-		output.push(`}`);
+			output.push(`}`);
+		} else {
+			output.push(`if (self.gpp_ui_${this.options.name}.stored_text != ${new_value})`);
+			output.push(`{`);
+
+			output.push(`\tself.gpp_ui_${this.options.name} setText(${new_value});`);
+			output.push(`\tself.gpp_ui_${this.options.name}.stored_text = ${new_value};`);
+
+			output.push(`}`);
+		}
 
 		return output;
 	}
