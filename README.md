@@ -1,3 +1,5 @@
+# [Documentation](https://maxvanasten.github.io/typescript-to-gsc/)
+
 # TS_GSC: Get Started
 
 ## Prerequisites
@@ -7,7 +9,7 @@
 
 ## Step one: download ts_gsc
 
-To get started with ts_gsc, please clone the [github repository](https://github.com/maxvanasten/ts_gsc).
+To get started with ts_gsc, please download a release from the [github repository](https://github.com/maxvanasten/typescript-to-gsc).
 After you have downloaded the repository, extract it and in the directory execute the following command: `npm i`, this will install the required dependencies.
 
 ## Step two: create your script
