@@ -10,14 +10,14 @@
 ## Step one: download ts_gsc
 
 To get started with ts_gsc, please download a release from the [github repository](https://github.com/maxvanasten/typescript-to-gsc).
-After you have downloaded the repository, extract it and in the directory execute the following command: `npm i`, this will install the required dependencies.
+After you have downloaded the release, extract it and in the directory execute the following command: `npm i`, this will install the required dependencies.
 
 ## Step two: create your script
 
-In the `./src` folder (or any folder really), create a `.ts` file. You can now import various parts of the ts_gsc library to interact with the game, below is a small example where we give the player 50000 points upon spawning into the game.
+In the `./scripts/src` folder (or any folder really, this is just for organization), create a `.ts` file. You can now import various parts of the ts_gsc library to interact with the game, below is a small example where we give the player 50000 points upon spawning into the game.
 
 ```ts
-import Player from '../lib/player';
+import Player from '../library/player';
 
 export const init_functions = [
 	Player.setScore(50000)
@@ -28,12 +28,12 @@ export const init_functions = [
 
 Your script needs to export atleast ONE or more of the following data:
 
-I have created a simple gungame challenge script for the map Origins that will be located in the `./src/` directory for you to take a look at how to work with ts_gsc
+I have created a simple gungame challenge script for the map Origins that will be located in the `./scripts/src/zm/origins_spawnroom` directory for you to take a look at how to work with ts_gsc.
 
-- *include_files*: Files you may need to include to access certain functions within gsc
+- *include_files*: Files you may need to include to access certain functions within gsc.
 - *init_functions*: Run once, when the player is spawned in.
-- *update_functions*: Run every tick
-- *custom_functions*: Can be called from anywhere else
+- *update_functions*: Run every tick.
+- *custom_functions*: Can be called from anywhere else.
 
 ## Step three: Add your script to the configuration
 
@@ -48,12 +48,12 @@ Take a look at the `./config.ts` file, in here you can define your scripts and m
 	// All of the TS files the transpiler should use to create your GSC script.
 	input_files: [
 		// Main logic
-		'./src/origins_spawnroom/main.ts',
+		'./scripts/src/zm/origins_spawnroom/main.ts',
 		// Hud element
-		'./src/origins_spawnroom/hud.ts',
+		'./scripts/src/zm/origins_spawnroom/hud.ts',
 		// Add health meter and zombie counter
-		'./src/health_meter.ts',
-		'./src/zombie_counter.ts'
+		'./scripts/src/zm/health_meter.ts',
+		'./scripts/src/zm/zombie_counter.ts'
 	]
 },
 ```
