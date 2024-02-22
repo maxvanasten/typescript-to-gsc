@@ -71,7 +71,7 @@ const transpile = (
 	includes: string[],
 	init: string[][],
 	update: string[][],
-	custom: { name: string; lines: string[][] }[]
+	custom: { name: string; lines: string[][]; arguments?: string[] }[]
 ) => {
 	console.time(`transpiling_target_${name}`);
 	// Remove duplicate includes
@@ -113,7 +113,17 @@ const transpile = (
 	// Add custom functions
 	if (custom) {
 		custom.forEach((custom_func) => {
-			let output = `gpp_custom_${custom_func.name}()\n{\n`;
+			let formatted_arguments = '';
+
+			if (custom_func.arguments) {
+				custom_func.arguments.forEach((arg) => {
+					formatted_arguments += `${arg}, `;
+				});
+
+				formatted_arguments = formatted_arguments.slice(0, formatted_arguments.length - 2);
+			}
+
+			let output = `gpp_custom_${custom_func.name}(${formatted_arguments})\n{\n`;
 
 			custom_func.lines.forEach((func) => {
 				func.forEach((line) => {
