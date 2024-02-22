@@ -220,8 +220,8 @@ gpp_custom_player_wins()
 
 gpp_custom_player_revived_monitor()
 {
-	// Level.wait_till("player_revived")
-	level waittill("player_revived");
+	// Player.awaitEvent(""player_revived"")
+	self waittill(""player_revived"");
 }
 
 gpp_custom_check_kills()
@@ -292,8 +292,8 @@ gpp_custom_reward_players_in_capture_zone()
 
 gpp_custom_handle_round_change()
 {
-	// Level.wait_till("end_of_round")
-	level waittill("end_of_round");
+	// Player.awaitEvent(""end_of_round"")
+	self waittill(""end_of_round"");
 	// setValue() on player
 	self.recapture_zone = maps\mp\zm_tomb_capture_zones::get_recapture_zone();
 	self.recapture_zone maps\mp\zm_tomb_capture_zones::init_capture_zone();

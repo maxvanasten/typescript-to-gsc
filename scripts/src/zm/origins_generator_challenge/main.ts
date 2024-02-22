@@ -29,14 +29,14 @@ export const custom_functions = [
 		name: 'handle_round_change',
 		lines: [
 			Level.wait_till(`"end_of_round"`),
-			Player.setValue('recapture_zone', `maps\\mp\\zm_tomb_capture_zones::get_recapture_zone()`),
+			Player.set_value('recapture_zone', `maps\\mp\\zm_tomb_capture_zones::get_recapture_zone()`),
 			Core.run_function_on_entity(`maps\\mp\\zm_tomb_capture_zones::init_capture_zone()`, `self.recapture_zone`)
 		]
 	},
 	{
 		name: 'player_handler',
 		lines: [
-			Player.setValue('b_challenge_exists', 'maps\\mp\\zombies\\_zm_challenges::challenge_exists ("zc_zone_captures")'),
+			Player.set_value('b_challenge_exists', 'maps\\mp\\zombies\\_zm_challenges::challenge_exists ("zc_zone_captures")'),
 
 			Player.notify('completed_zone_capture'),
 			Player.run_function(`maps\\mp\\zombies\\_zm_score::player_add_points("bonus_points_powerup", 100)`),
@@ -66,12 +66,12 @@ export const custom_functions = [
 	{
 		name: 'give_random_perk',
 		lines: [
-			Player.setValue('random_perk', Core.random_from_array('self.perk_list')),
+			Player.set_value('random_perk', Core.random_from_array('self.perk_list')),
 			// Check if player already has this perk, if so, run this same function again
 			if_statement(
 				[
 					// Player has this perk
-					Player.hasPerk(Player.getValue('random_perk'))
+					Player.has_perk(Player.get_value('random_perk'))
 				],
 				[
 					// Rerun func
@@ -79,7 +79,7 @@ export const custom_functions = [
 				],
 				[
 					// Give perk
-					Player.givePerk(Player.getValue('random_perk'))
+					Player.give_perk(Player.get_value('random_perk'))
 				]
 			)
 		]
@@ -116,7 +116,7 @@ const perk_list = [
 ];
 
 export const init_functions = [
-	Player.setArray('perk_list', perk_list),
+	Player.set_array('perk_list', perk_list),
 	Core.replace_function_with_custom('maps\\mp\\zm_tomb_capture_zones::get_generator_capture_start_cost', 'get_generator_capture_start_cost'),
 	Core.replace_function_with_custom('maps\\mp\\zm_tomb_capture_zones::reward_players_in_capture_zone', 'reward_players_in_capture_zone'),
 	Core.replace_function_with_custom('maps\\mp\\zm_tomb_capture_zones::get_progress_rate', 'get_progress_rate')

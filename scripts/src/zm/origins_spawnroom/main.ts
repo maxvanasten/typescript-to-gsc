@@ -48,22 +48,22 @@ export const custom_functions = [
 	{
 		name: 'next_weapon',
 		lines: [
-			Player.setValue('weapon_kills', 0),
-			Player.takeAllWeapons(),
-			Player.addNumberToValue('gun_index', 1),
-			Player.giveWeapon(`self.gungame_weapons[self.gun_index]`)
+			Player.set_value('weapon_kills', 0),
+			Player.take_all_weapons(),
+			Player.increment_value('gun_index', 1),
+			Player.give_weapon(`self.gungame_weapons[self.gun_index]`)
 		]
 	},
 	{
 		name: 'player_wins',
 		lines: [
-			Player.setValue('finished', 1),
-			Player.iPrintLnBold(`"You have won the challenge!"`),
-			Player.givePerk(Perks.mule_kick),
-			Player.takeCurrentWeapon(),
-			Player.giveWeapon(Weapons.zm_tomb.skorpion.upgraded),
-			Player.giveWeapon(Weapons.zm_tomb.python.upgraded),
-			Player.giveWeapon(Weapons.zm_tomb.air_staff.default)
+			Player.set_value('finished', 1),
+			Player.i_print_ln_bold(`"You have won the challenge!"`),
+			Player.give_perk(Perks.mule_kick),
+			Player.take_current_weapon(),
+			Player.give_weapon(Weapons.zm_tomb.skorpion.upgraded),
+			Player.give_weapon(Weapons.zm_tomb.python.upgraded),
+			Player.give_weapon(Weapons.zm_tomb.air_staff.default)
 		]
 	},
 	{
@@ -76,16 +76,16 @@ export const custom_functions = [
 		name: 'check_kills',
 		lines: [
 			// Calculate difference between last check
-			Player.setValue('kills_diff', `self.kills - self.temp_kills`),
+			Player.set_value('kills_diff', `self.kills - self.temp_kills`),
 			// If there is a difference, process the change
 			if_statement(
 				[
 					`self.kills_diff > 0`
 				],
 				[
-					Player.setValue('temp_kills', `self.kills`),
-					Player.addNumberToValue('weapon_kills', `self.kills_diff`),
-					Player.setValue('kills_diff', 0)
+					Player.set_value('temp_kills', `self.kills`),
+					Player.increment_value('weapon_kills', `self.kills_diff`),
+					Player.set_value('kills_diff', 0)
 				]
 			)
 		]
@@ -95,20 +95,20 @@ export const custom_functions = [
 export const init_functions = [
 	Core.disable_perk_limit(),
 
-	Player.setValue('score', 0),
-	Player.setArray('gungame_weapons', gungame_weapons),
-	Player.setValue('gun_index', -1),
-	Player.setValue('finished', 0),
-	Player.setValue(`temp_kills`, 0),
+	Player.set_value('score', 0),
+	Player.set_array('gungame_weapons', gungame_weapons),
+	Player.set_value('gun_index', -1),
+	Player.set_value('finished', 0),
+	Player.set_value(`temp_kills`, 0),
 
 	Core.run_custom_function('next_weapon'),
 
-	Player.iPrintLnBold(`"^5Get ^1kills ^5to upgrade your weapon!"`)
+	Player.i_print_ln_bold(`"^5Get ^1kills ^5to upgrade your weapon!"`)
 ];
 
 export const update_functions = [
 	// Core.thread_custom_function('player_revived_monitor'),
-	Player.giveMaxAmmo(Player.current_weapon),
+	Player.give_max_ammo(Player.current_weapon),
 	Core.run_custom_function('check_kills'),
 	// Check if player has gotten enough kills, but hasnt finished the challenge yet
 	if_statement(
@@ -138,7 +138,7 @@ export const update_functions = [
 			`${Player.score} > 0`
 		],
 		[
-			Player.setValue('score', 0)
+			Player.set_value('score', 0)
 		]
 	)
 ];

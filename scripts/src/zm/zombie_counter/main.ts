@@ -31,6 +31,6 @@ export const custom_functions = [
 ];
 
 export const update_functions = [
-	Player.setValue('zombies_left', `level.zombie_total + get_current_zombie_count()`),
+	Player.set_value('zombies_left', `level.zombie_total + get_current_zombie_count()`),
 	Core.thread_custom_function('update_hud_zombie_counter')
 ];
