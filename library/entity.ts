@@ -44,7 +44,7 @@ export class Entity {
 		let output = [
 			`// Player.awaitEvent("${event_name}")`
 		];
-		output.push(`self waittill("${event_name}");`);
+		output.push(`self waittill(${event_name});`);
 		return output;
 	}
 

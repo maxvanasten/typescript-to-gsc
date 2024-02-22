@@ -1,6 +1,5 @@
 #include common_scripts\utility;
 #include maps\mp\gametypes_zm\_hud_util;
-#include maps\mp\zombies\_zm_utility;
 init()
 {
     level thread onPlayerConnect();
@@ -115,26 +114,6 @@ gpp_init()
 	replaceFunc(maps\mp\zm_tomb_capture_zones::get_generator_capture_start_cost, ::gpp_custom_get_generator_capture_start_cost);
 	replaceFunc(maps\mp\zm_tomb_capture_zones::reward_players_in_capture_zone, ::gpp_custom_reward_players_in_capture_zone);
 	replaceFunc(maps\mp\zm_tomb_capture_zones::get_progress_rate, ::gpp_custom_get_progress_rate);
-	// init() on HudElement 'health_counter'
-	self.gpp_ui_health_counter = createFontString("objective", 1.5);
-	self.gpp_ui_health_counter setPoint("CENTER", "CENTER", 0, 200);
-	self.gpp_ui_health_counter.alpha = 1;
-	self.gpp_ui_health_counter.hidewheninmenu = true;
-	self.gpp_ui_health_counter.hidewhendead = true;
-	self.gpp_ui_health_counter.color = (1, 1, 1);
-	self.gpp_ui_health_counter setValue(0);
-	self.gpp_ui_health_counter.label = &"Health: ^6";
-	self.gpp_ui_health_counter.stored_value = 0;
-	// init() on HudElement 'zombie_counter'
-	self.gpp_ui_zombie_counter = createFontString("objective", 1.5);
-	self.gpp_ui_zombie_counter setPoint("CENTER", "CENTER", 0, 215);
-	self.gpp_ui_zombie_counter.alpha = 1;
-	self.gpp_ui_zombie_counter.hidewheninmenu = true;
-	self.gpp_ui_zombie_counter.hidewhendead = true;
-	self.gpp_ui_zombie_counter.color = (1, 1, 1);
-	self.gpp_ui_zombie_counter setValue(0);
-	self.gpp_ui_zombie_counter.label = &"Zombies: ^1";
-	self.gpp_ui_zombie_counter.stored_value = 0;
 }
 
 gpp_update()
@@ -175,10 +154,6 @@ gpp_update()
 		self thread gpp_custom_update_hud_weapon();
 	}
 	self thread gpp_custom_handle_round_change();
-	self thread gpp_custom_update_hud_health_counter();
-	// setValue() on player
-	self.zombies_left = level.zombie_total + get_current_zombie_count();
-	self thread gpp_custom_update_hud_zombie_counter();
 }
 
 gpp_custom_next_weapon()
@@ -221,7 +196,7 @@ gpp_custom_player_wins()
 gpp_custom_player_revived_monitor()
 {
 	// Player.awaitEvent(""player_revived"")
-	self waittill(""player_revived"");
+	self waittill("player_revived");
 }
 
 gpp_custom_check_kills()
@@ -293,7 +268,7 @@ gpp_custom_reward_players_in_capture_zone()
 gpp_custom_handle_round_change()
 {
 	// Player.awaitEvent(""end_of_round"")
-	self waittill(""end_of_round"");
+	self waittill("end_of_round");
 	// setValue() on player
 	self.recapture_zone = maps\mp\zm_tomb_capture_zones::get_recapture_zone();
 	self.recapture_zone maps\mp\zm_tomb_capture_zones::init_capture_zone();
@@ -342,27 +317,5 @@ gpp_custom_get_progress_rate(n_players_in_zone)
 	{
 		return -0.5;
 	}
-}
-
-gpp_custom_update_hud_health_counter()
-{
-	// update() on HudElement 'health_counter'
-	if (self.gpp_ui_health_counter.stored_value != self.health)
-	{
-		self.gpp_ui_health_counter setValue(self.health);
-		self.gpp_ui_health_counter.stored_value = self.health;
-	}
-	wait 0.5;
-}
-
-gpp_custom_update_hud_zombie_counter()
-{
-	// update() on HudElement 'zombie_counter'
-	if (self.gpp_ui_zombie_counter.stored_value != self.zombies_left)
-	{
-		self.gpp_ui_zombie_counter setValue(self.zombies_left);
-		self.gpp_ui_zombie_counter.stored_value = self.zombies_left;
-	}
-	wait 0.5;
 }
 
