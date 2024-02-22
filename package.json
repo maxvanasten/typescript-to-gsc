@@ -14,7 +14,12 @@
 		"dev-tools:sync-game": "npm run dev-tools:delete-existing-scripts && npm run dev-tools:move-scripts",
 
 		"dev-tools:update": "npm run transpile && npm run dev-tools:sync-game",
-		"dev-tools:update-with-doc": "npm run dev-tools:full-build && npm run dev-tools:sync-game"
+		"dev-tools:update-with-doc": "npm run dev-tools:full-build && npm run dev-tools:sync-game",
+
+		"dev-tools:clean-release": "rm -rf ./releases/pre-release/*",
+		"dev-tools:prepare-release-files": "cp -r ./transpiler ./releases/pre-release/ && cp -r ./scripts ./releases/pre-release/ && cp -r ./library ./releases/pre-release/ && cp config.ts ./releases/pre-release/ && cp package.json ./releases/pre-release/ && cp tsconfig.json ./releases/pre-release/",
+
+		"dev-tools:pre-release": "npm run dev-tools:update-with-doc && npm run dev-tools:clean-release && npm run dev-tools:prepare-release-files"
 	},
 	"repository": {
 		"type": "git",
