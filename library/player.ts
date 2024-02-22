@@ -37,6 +37,26 @@ const Player = {
 		return output;
 	},
 
+	getValue: (field: string): string => {
+		return `self.${field}`;
+	},
+
+	hasPerk: (perk_name: string) => {
+		return `self hasPerk(${perk_name})`;
+	},
+
+	notify: (flag: string) => {
+		return [
+			`self notify("${flag}");`
+		];
+	},
+
+	run_function: (function_call: string) => {
+		return [
+			`self ${function_call};`
+		];
+	},
+
 	addNumberToValue: (field: string, amount: number | string): string[] => {
 		let output = [
 			`// incrementValue() on player`,
@@ -52,6 +72,13 @@ const Player = {
 		];
 		return output;
 	},
+
+	// upgrade_weapon: () => {
+	// 	let output = [
+	// 		`// Player.upgrade_weapon()`,
+	// 		``
+	// 	]
+	// },
 
 	/**
 	 	* @description Sets an array `field` on the player with the contents `arr`. If `is_string = true` then the items will be added to the array as strings.

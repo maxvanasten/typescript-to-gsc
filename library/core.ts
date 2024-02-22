@@ -23,6 +23,48 @@ const Core = {
 		return [
 			`wait ${time};`
 		];
+	},
+	return: (value: number | string) => {
+		return [
+			`return ${value};`
+		];
+	},
+	replace_function_with_custom: (default_function_path: string, custom_function_name: string) => {
+		return [
+			`replaceFunc(${default_function_path}, ::gpp_custom_${custom_function_name});`
+		];
+	},
+	set_local_variable: (variable_name: string, value: number | string) => {
+		return [
+			`${variable_name} = ${value};`
+		];
+	},
+	is_not: (value: number | string) => {
+		return `!${value}`;
+	},
+	self_ent_flag: (flag_name: string) => {
+		return `self maps\\mp\\zombies\\_zm_utility::ent_flag("${flag_name}")`;
+	},
+	for_each_run_custom: (name: string, obj: string, custom_function_name: string) => {
+		return [
+			`foreach (${name} in ${obj})`,
+			`{`,
+			`\t${name} gpp_custom_${custom_function_name}();`,
+			`}`
+		];
+	},
+	get_upgrade_weapon: (weapon_name: string, add_attachment?: 0 | 1) => {
+		if (!add_attachment) add_attachment = 0;
+
+		return `maps\\mp\\zombies\\_zm_weapons::get_upgrade_weapon(${weapon_name}, ${add_attachment})`;
+	},
+	run_function_on_entity: (func_call: string, entity: string) => {
+		return [
+			`${entity} ${func_call};`
+		];
+	},
+	random_from_array: (array_name: string) => {
+		return `random(${array_name})`;
 	}
 };
 
