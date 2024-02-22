@@ -3,6 +3,7 @@ import Player from '../../../../library/player';
 
 import Weapons from '../../../../library/lists/weapons';
 import Perks from '../../../../library/lists/perks';
+import Level from '../../../../library/level';
 
 export const gungame_weapons = [
 	Weapons.zm_tomb.c96.default,
@@ -13,13 +14,17 @@ export const gungame_weapons = [
 	Weapons.zm_tomb.ksg.default,
 	Weapons.zm_tomb.m14.default,
 
-	Weapons.zm_tomb.r870mcs.default,
-	Weapons.zm_tomb.m1216.default,
-
 	Weapons.zm_tomb.dsr50.default,
 	Weapons.zm_tomb.ballista.default,
 
-	Weapons.zm_tomb.m32.default,
+	Weapons.zm_tomb.r870mcs.default,
+	Weapons.zm_tomb.m1216.default,
+
+	Weapons.zm_tomb.pdw57.default,
+	Weapons.zm_tomb.qcw05.default,
+	Weapons.zm_tomb.skorpion.default,
+	Weapons.zm_tomb.type95.default,
+
 	Weapons.zm_tomb.mp40.default,
 	Weapons.zm_tomb.fnfal.default,
 	Weapons.zm_tomb.ak74u.extclip,
@@ -41,19 +46,6 @@ export const kills_per_promotion = 12;
 
 export const custom_functions = [
 	{
-		name: 'give_perks',
-		lines: [
-			Player.givePerk(Perks.juggernog),
-			Player.givePerk(Perks.double_tap),
-			Player.givePerk(Perks.stamin_up),
-			Player.givePerk(Perks.speed_cola),
-			Player.givePerk(Perks.quick_revive),
-			Player.givePerk(Perks.mule_kick),
-			Player.givePerk(Perks.deadshot),
-			Player.givePerk(Perks.electric_cherry)
-		]
-	},
-	{
 		name: 'next_weapon',
 		lines: [
 			Player.setValue('weapon_kills', 0),
@@ -67,10 +59,17 @@ export const custom_functions = [
 		lines: [
 			Player.setValue('finished', 1),
 			Player.iPrintLnBold(`"You have won the challenge!"`),
+			Player.givePerk(Perks.mule_kick),
 			Player.takeCurrentWeapon(),
-			Player.giveWeapon(Weapons.zm_tomb.mg08.upgraded),
+			Player.giveWeapon(Weapons.zm_tomb.skorpion.upgraded),
 			Player.giveWeapon(Weapons.zm_tomb.python.upgraded),
 			Player.giveWeapon(Weapons.zm_tomb.air_staff.default)
+		]
+	},
+	{
+		name: 'player_revived_monitor',
+		lines: [
+			Level.wait_till(`"player_revived"`)
 		]
 	},
 	{
@@ -103,12 +102,12 @@ export const init_functions = [
 	Player.setValue(`temp_kills`, 0),
 
 	Core.run_custom_function('next_weapon'),
-	Core.run_custom_function('give_perks'),
 
 	Player.iPrintLnBold(`"^5Get ^1kills ^5to upgrade your weapon!"`)
 ];
 
 export const update_functions = [
+	// Core.thread_custom_function('player_revived_monitor'),
 	Player.giveMaxAmmo(Player.current_weapon),
 	Core.run_custom_function('check_kills'),
 	// Check if player has gotten enough kills, but hasnt finished the challenge yet

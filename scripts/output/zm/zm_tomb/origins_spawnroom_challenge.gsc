@@ -43,11 +43,14 @@ gpp_init()
 	self.gungame_weapons[self.gungame_weapons.size] = "kard_zm";
 	self.gungame_weapons[self.gungame_weapons.size] = "ksg_zm";
 	self.gungame_weapons[self.gungame_weapons.size] = "m14_zm";
-	self.gungame_weapons[self.gungame_weapons.size] = "870mcs_zm";
-	self.gungame_weapons[self.gungame_weapons.size] = "srm1216_zm";
 	self.gungame_weapons[self.gungame_weapons.size] = "dsr50_zm";
 	self.gungame_weapons[self.gungame_weapons.size] = "ballista_zm";
-	self.gungame_weapons[self.gungame_weapons.size] = "m32_zm";
+	self.gungame_weapons[self.gungame_weapons.size] = "870mcs_zm";
+	self.gungame_weapons[self.gungame_weapons.size] = "srm1216_zm";
+	self.gungame_weapons[self.gungame_weapons.size] = "pdw57_zm";
+	self.gungame_weapons[self.gungame_weapons.size] = "qcw05_zm";
+	self.gungame_weapons[self.gungame_weapons.size] = "evoskorpion_zm";
+	self.gungame_weapons[self.gungame_weapons.size] = "type95_zm";
 	self.gungame_weapons[self.gungame_weapons.size] = "mp40_zm";
 	self.gungame_weapons[self.gungame_weapons.size] = "fnfal_zm";
 	self.gungame_weapons[self.gungame_weapons.size] = "ak74u_extclip_zm";
@@ -68,7 +71,6 @@ gpp_init()
 	// setValue() on player
 	self.temp_kills = 0;
 	self gpp_custom_next_weapon();
-	self gpp_custom_give_perks();
 	// iPrintLnBold() on player
 	self iprintlnbold("^5Get ^1kills ^5to upgrade your weapon!");
 	// init() on HudElement 'osc_hud_total_kills'
@@ -101,6 +103,18 @@ gpp_init()
 	self.gpp_ui_osc_hud_weapon setValue(0);
 	self.gpp_ui_osc_hud_weapon.label = &"^7Weapons left: ^3";
 	self.gpp_ui_osc_hud_weapon.stored_value = 0;
+	// setArray() on player
+	self.perk_list = [];
+	self.perk_list[self.perk_list.size] = "specialty_quickrevive";
+	self.perk_list[self.perk_list.size] = "specialty_deadshot";
+	self.perk_list[self.perk_list.size] = "specialty_fastreload";
+	self.perk_list[self.perk_list.size] = "specialty_armorvest";
+	self.perk_list[self.perk_list.size] = "specialty_longersprint";
+	self.perk_list[self.perk_list.size] = "specialty_rof";
+	self.perk_list[self.perk_list.size] = "specialty_grenadepulldeath";
+	replaceFunc(maps\mp\zm_tomb_capture_zones::get_generator_capture_start_cost, ::gpp_custom_get_generator_capture_start_cost);
+	replaceFunc(maps\mp\zm_tomb_capture_zones::reward_players_in_capture_zone, ::gpp_custom_reward_players_in_capture_zone);
+	replaceFunc(maps\mp\zm_tomb_capture_zones::get_progress_rate, ::gpp_custom_get_progress_rate);
 	// init() on HudElement 'health_counter'
 	self.gpp_ui_health_counter = createFontString("objective", 1.5);
 	self.gpp_ui_health_counter setPoint("CENTER", "CENTER", 0, 200);
@@ -160,30 +174,11 @@ gpp_update()
 		self thread gpp_custom_update_hud_weapon_kills();
 		self thread gpp_custom_update_hud_weapon();
 	}
+	self thread gpp_custom_handle_round_change();
 	self thread gpp_custom_update_hud_health_counter();
 	// setValue() on player
 	self.zombies_left = level.zombie_total + get_current_zombie_count();
 	self thread gpp_custom_update_hud_zombie_counter();
-}
-
-gpp_custom_give_perks()
-{
-	// givePerk() on player
-	self maps\mp\zombies\_zm_perks::give_perk("specialty_armorvest");
-	// givePerk() on player
-	self maps\mp\zombies\_zm_perks::give_perk("specialty_rof");
-	// givePerk() on player
-	self maps\mp\zombies\_zm_perks::give_perk("specialty_longersprint");
-	// givePerk() on player
-	self maps\mp\zombies\_zm_perks::give_perk("specialty_fastreload");
-	// givePerk() on player
-	self maps\mp\zombies\_zm_perks::give_perk("specialty_quickrevive");
-	// givePerk() on player
-	self maps\mp\zombies\_zm_perks::give_perk("specialty_additionalprimaryweapon");
-	// givePerk() on player
-	self maps\mp\zombies\_zm_perks::give_perk("specialty_deadshot");
-	// givePerk() on player
-	self maps\mp\zombies\_zm_perks::give_perk("specialty_grenadepulldeath");
 }
 
 gpp_custom_next_weapon()
@@ -211,14 +206,22 @@ gpp_custom_player_wins()
 	self.finished = 1;
 	// iPrintLnBold() on player
 	self iprintlnbold("You have won the challenge!");
+	// givePerk() on player
+	self maps\mp\zombies\_zm_perks::give_perk("specialty_additionalprimaryweapon");
 	// Player.takeCurrentWeapon()
 	self takeWeapon(self getcurrentweapon());
 	// giveWeapon() on player
-	self giveWeapon("mg08_upgraded_zm");
+	self giveWeapon("evoskorpion_upgraded_zm");
 	// giveWeapon() on player
 	self giveWeapon("python_upgraded_zm");
 	// giveWeapon() on player
 	self giveWeapon("staff_air_zm");
+}
+
+gpp_custom_player_revived_monitor()
+{
+	// Level.wait_till("player_revived")
+	level waittill("player_revived");
 }
 
 gpp_custom_check_kills()
@@ -262,12 +265,83 @@ gpp_custom_update_hud_weapon_kills()
 gpp_custom_update_hud_weapon()
 {
 	// update() on HudElement 'osc_hud_weapon'
-	if (self.gpp_ui_osc_hud_weapon.stored_value != 23 - self.gun_index)
+	if (self.gpp_ui_osc_hud_weapon.stored_value != 26 - self.gun_index)
 	{
-		self.gpp_ui_osc_hud_weapon setValue(23 - self.gun_index);
-		self.gpp_ui_osc_hud_weapon.stored_value = 23 - self.gun_index;
+		self.gpp_ui_osc_hud_weapon setValue(26 - self.gun_index);
+		self.gpp_ui_osc_hud_weapon.stored_value = 26 - self.gun_index;
 	}
 	wait 0.5;
+}
+
+gpp_custom_get_generator_capture_start_cost()
+{
+	return 0;
+}
+
+gpp_custom_reward_players_in_capture_zone()
+{
+	// if_statement()
+	if (!self maps\mp\zombies\_zm_utility::ent_flag("player_controlled"))
+	{
+		foreach (player in get_players_in_capture_zone())
+		{
+			player gpp_custom_player_handler();
+		}
+	}
+}
+
+gpp_custom_handle_round_change()
+{
+	// Level.wait_till("end_of_round")
+	level waittill("end_of_round");
+	// setValue() on player
+	self.recapture_zone = maps\mp\zm_tomb_capture_zones::get_recapture_zone();
+	self.recapture_zone maps\mp\zm_tomb_capture_zones::init_capture_zone();
+}
+
+gpp_custom_player_handler()
+{
+	// setValue() on player
+	self.b_challenge_exists = maps\mp\zombies\_zm_challenges::challenge_exists ("zc_zone_captures");
+	self notify("completed_zone_capture");
+	self maps\mp\zombies\_zm_score::player_add_points("bonus_points_powerup", 100);
+	// if_statement()
+	if (self.b_challenge_exists)
+	{
+		self maps\mp\zombies\_zm_challenges::increment_stat("zc_zone_captures");
+	}
+	self maps\mp\zombies\_zm_stats::increment_client_stat("tomb_generator_captured", 0);
+	self maps\mp\zombies\_zm_stats::increment_player_stat("tomb_generator_captured");
+	self gpp_custom_give_random_perk();
+}
+
+gpp_custom_give_random_perk()
+{
+	// setValue() on player
+	self.random_perk = random(self.perk_list);
+	// if_statement()
+	if (self hasPerk(self.random_perk))
+	{
+		self gpp_custom_give_random_perk();
+	}
+	else
+	{
+		// givePerk() on player
+		self maps\mp\zombies\_zm_perks::give_perk(self.random_perk);
+	}
+}
+
+gpp_custom_get_progress_rate(n_players_in_zone)
+{
+	// if_statement()
+	if (n_players_in_zone > 0)
+	{
+		return 0.2;
+	}
+	else
+	{
+		return -0.5;
+	}
 }
 
 gpp_custom_update_hud_health_counter()
