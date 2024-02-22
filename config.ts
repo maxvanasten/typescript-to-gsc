@@ -14,6 +14,13 @@ const ts_gsc_config = {
 				'./scripts/src/zm/health_counter/main.ts',
 				'./scripts/src/zm/zombie_counter/main.ts'
 			]
+		},
+		{
+			name: 'motd-wolf-counter',
+			output_file: './scripts/output/zm/zm_prison/wolf-counter.gsc',
+			input_files: [
+				'./scripts/src/zm/motd_wolf_counter/main.ts'
+			]
 		}
 		// {
 		// 	name: 'origins_generator',
