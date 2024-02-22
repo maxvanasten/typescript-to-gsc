@@ -1,4 +1,4 @@
-# [Documentation](https://maxvanasten.github.io/typescript-to-gsc/)
+# [Documentation](https://maxvanasten.github.io/typescript-to-gsc/documentation)
 
 # TS_GSC: Get Started
 
