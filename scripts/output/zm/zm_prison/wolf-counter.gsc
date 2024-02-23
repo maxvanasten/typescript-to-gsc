@@ -40,60 +40,56 @@ gpp_init()
 	self.gpp_ui_wolf_counter_title.color = (1, 1, 1);
 	self.gpp_ui_wolf_counter_title setText("^8Wolf Counter");
 	self.gpp_ui_wolf_counter_title.stored_text = "^8Wolf Counter";
-	// init() on HudElement 'wolf_counter_one'
-	self.gpp_ui_wolf_counter_one = createFontString("objective", 1.5);
-	self.gpp_ui_wolf_counter_one setPoint("center", "center", -220, -185);
-	self.gpp_ui_wolf_counter_one.alpha = 1;
-	self.gpp_ui_wolf_counter_one.hidewheninmenu = true;
-	self.gpp_ui_wolf_counter_one.hidewhendead = true;
-	self.gpp_ui_wolf_counter_one.color = (1, 1, 1);
-	self.gpp_ui_wolf_counter_one setValue(0);
-	self.gpp_ui_wolf_counter_one.label = &"Wolf 1: ";
-	self.gpp_ui_wolf_counter_one.stored_value = 0;
-	// init() on HudElement 'wolf_counter_two'
-	self.gpp_ui_wolf_counter_two = createFontString("objective", 1.5);
-	self.gpp_ui_wolf_counter_two setPoint("center", "center", -220, -170);
-	self.gpp_ui_wolf_counter_two.alpha = 1;
-	self.gpp_ui_wolf_counter_two.hidewheninmenu = true;
-	self.gpp_ui_wolf_counter_two.hidewhendead = true;
-	self.gpp_ui_wolf_counter_two.color = (1, 1, 1);
-	self.gpp_ui_wolf_counter_two setValue(0);
-	self.gpp_ui_wolf_counter_two.label = &"Wolf 2: ";
-	self.gpp_ui_wolf_counter_two.stored_value = 0;
-	// init() on HudElement 'wolf_counter_three'
-	self.gpp_ui_wolf_counter_three = createFontString("objective", 1.5);
-	self.gpp_ui_wolf_counter_three setPoint("center", "center", -220, -155);
-	self.gpp_ui_wolf_counter_three.alpha = 1;
-	self.gpp_ui_wolf_counter_three.hidewheninmenu = true;
-	self.gpp_ui_wolf_counter_three.hidewhendead = true;
-	self.gpp_ui_wolf_counter_three.color = (1, 1, 1);
-	self.gpp_ui_wolf_counter_three setValue(6);
-	self.gpp_ui_wolf_counter_three.label = &"Wolf 3: ";
-	self.gpp_ui_wolf_counter_three.stored_value = 6;
+	// init() on HudElement 'wolf_counter_0'
+	self.gpp_ui_wolf_counter_0 = createFontString("objective", 1.5);
+	self.gpp_ui_wolf_counter_0 setPoint("center", "center", -220, -185);
+	self.gpp_ui_wolf_counter_0.alpha = 1;
+	self.gpp_ui_wolf_counter_0.hidewheninmenu = true;
+	self.gpp_ui_wolf_counter_0.hidewhendead = true;
+	self.gpp_ui_wolf_counter_0.color = (1, 1, 1);
+	self.gpp_ui_wolf_counter_0 setValue(6);
+	self.gpp_ui_wolf_counter_0.label = &"Wolf 1: ";
+	self.gpp_ui_wolf_counter_0.stored_value = 6;
+	// init() on HudElement 'wolf_counter_1'
+	self.gpp_ui_wolf_counter_1 = createFontString("objective", 1.5);
+	self.gpp_ui_wolf_counter_1 setPoint("center", "center", -220, -170);
+	self.gpp_ui_wolf_counter_1.alpha = 1;
+	self.gpp_ui_wolf_counter_1.hidewheninmenu = true;
+	self.gpp_ui_wolf_counter_1.hidewhendead = true;
+	self.gpp_ui_wolf_counter_1.color = (1, 1, 1);
+	self.gpp_ui_wolf_counter_1 setValue(6);
+	self.gpp_ui_wolf_counter_1.label = &"Wolf 2: ";
+	self.gpp_ui_wolf_counter_1.stored_value = 6;
+	// init() on HudElement 'wolf_counter_2'
+	self.gpp_ui_wolf_counter_2 = createFontString("objective", 1.5);
+	self.gpp_ui_wolf_counter_2 setPoint("center", "center", -220, -155);
+	self.gpp_ui_wolf_counter_2.alpha = 1;
+	self.gpp_ui_wolf_counter_2.hidewheninmenu = true;
+	self.gpp_ui_wolf_counter_2.hidewhendead = true;
+	self.gpp_ui_wolf_counter_2.color = (1, 1, 1);
+	self.gpp_ui_wolf_counter_2 setValue(6);
+	self.gpp_ui_wolf_counter_2.label = &"Wolf 3: ";
+	self.gpp_ui_wolf_counter_2.stored_value = 6;
 }
 
 gpp_update()
-{	// if_statement()
-	if (isdefined(level.soul_catchers[0]))
+{	// update() on HudElement 'wolf_counter_0'
+	if (self.gpp_ui_wolf_counter_0.stored_value != 6 - level.soul_catchers[0].souls_received)
 	{
-		// update() on HudElement 'wolf_counter_one'
-		if (self.gpp_ui_wolf_counter_one.stored_value != 6 - level.soul_catchers[0].souls_received)
-		{
-			self.gpp_ui_wolf_counter_one setValue(6 - level.soul_catchers[0].souls_received);
-			self.gpp_ui_wolf_counter_one.stored_value = 6 - level.soul_catchers[0].souls_received;
-		}
-		// update() on HudElement 'wolf_counter_two'
-		if (self.gpp_ui_wolf_counter_two.stored_value != 6 - level.soul_catchers[1].souls_received)
-		{
-			self.gpp_ui_wolf_counter_two setValue(6 - level.soul_catchers[1].souls_received);
-			self.gpp_ui_wolf_counter_two.stored_value = 6 - level.soul_catchers[1].souls_received;
-		}
-		// update() on HudElement 'wolf_counter_three'
-		if (self.gpp_ui_wolf_counter_three.stored_value != 6 - level.soul_catchers[2].souls_received)
-		{
-			self.gpp_ui_wolf_counter_three setValue(6 - level.soul_catchers[2].souls_received);
-			self.gpp_ui_wolf_counter_three.stored_value = 6 - level.soul_catchers[2].souls_received;
-		}
+		self.gpp_ui_wolf_counter_0 setValue(6 - level.soul_catchers[0].souls_received);
+		self.gpp_ui_wolf_counter_0.stored_value = 6 - level.soul_catchers[0].souls_received;
+	}
+	// update() on HudElement 'wolf_counter_1'
+	if (self.gpp_ui_wolf_counter_1.stored_value != 6 - level.soul_catchers[1].souls_received)
+	{
+		self.gpp_ui_wolf_counter_1 setValue(6 - level.soul_catchers[1].souls_received);
+		self.gpp_ui_wolf_counter_1.stored_value = 6 - level.soul_catchers[1].souls_received;
+	}
+	// update() on HudElement 'wolf_counter_2'
+	if (self.gpp_ui_wolf_counter_2.stored_value != 6 - level.soul_catchers[2].souls_received)
+	{
+		self.gpp_ui_wolf_counter_2 setValue(6 - level.soul_catchers[2].souls_received);
+		self.gpp_ui_wolf_counter_2.stored_value = 6 - level.soul_catchers[2].souls_received;
 	}
 }
 

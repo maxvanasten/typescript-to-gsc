@@ -7,51 +7,33 @@ const wolfcounter_title = new HudElement({
 	point: new Point('center', 'center', -220, -200),
 	text: `"^8Wolf Counter"`
 });
-const wolfcounter_one = new HudElement({
-	name: 'wolf_counter_one',
-	font: Font.default(),
-	point: new Point('center', 'center', -220, -185),
-	type: 'number',
-	value: 0,
-	label: 'Wolf 1: '
-});
-const wolfcounter_two = new HudElement({
-	name: 'wolf_counter_two',
-	font: Font.default(),
-	point: new Point('center', 'center', -220, -170),
-	type: 'number',
-	value: 0,
-	label: 'Wolf 2: '
-});
-const wolfcounter_three = new HudElement({
-	name: 'wolf_counter_three',
-	font: Font.default(),
-	point: new Point('center', 'center', -220, -155),
-	type: 'number',
-	value: 6,
-	label: 'Wolf 3: '
-});
+
+let init_functions_r = [
+	wolfcounter_title.init()
+];
+
+let update_functions_r: string[][] = [];
+
+let wolf_counters: HudElement[] = [];
+for (let i = 0; i < 3; i++) {
+	let wolf_counter = new HudElement({
+		name: `wolf_counter_${i}`,
+		font: Font.default(),
+		point: new Point('center', 'center', -220, -185 + i * 15),
+		type: 'number',
+		value: 6,
+		label: `Wolf ${i + 1}: `
+	});
+
+	wolf_counters.push(wolf_counter);
+
+	init_functions_r.push(wolf_counter.init());
+	update_functions_r.push(wolf_counter.update(`6 - level.soul_catchers[${i}].souls_received`));
+}
 
 export const include_files = [
 	'maps\\mp\\gametypes_zm\\_hud_util'
 ];
 
-export const init_functions = [
-	wolfcounter_title.init(),
-	wolfcounter_one.init(),
-	wolfcounter_two.init(),
-	wolfcounter_three.init()
-];
-
-export const update_functions = [
-	if_statement(
-		[
-			`isdefined(level.soul_catchers[0])`
-		],
-		[
-			wolfcounter_one.update(`6 - level.soul_catchers[0].souls_received`),
-			wolfcounter_two.update(`6 - level.soul_catchers[1].souls_received`),
-			wolfcounter_three.update(`6 - level.soul_catchers[2].souls_received`)
-		]
-	)
-];
+export const init_functions = init_functions_r;
+export const update_functions = update_functions_r;
