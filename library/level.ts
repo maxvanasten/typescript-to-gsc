@@ -8,6 +8,13 @@ class LevelClass extends Entity {
 		];
 		return output;
 	}
+
+	wait_till(event_name: string): string[] {
+		return [
+			`// Level.wait_till(${event_name})`,
+			`level waittill(${event_name});`
+		];
+	}
 }
 
 const Level = new LevelClass();

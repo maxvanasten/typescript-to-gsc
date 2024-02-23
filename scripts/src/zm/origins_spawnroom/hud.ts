@@ -51,7 +51,7 @@ export const custom_functions = [
 	{
 		name: 'update_hud_weapon_kills',
 		lines: [
-			hud_weapon_kills.update(`${kills_per_promotion} - self.weapon_kills`),
+			hud_weapon_kills.update(`(${kills_per_promotion} + (self.gun_index*2)) - self.weapon_kills`),
 			Core.wait(0.5)
 		]
 	},

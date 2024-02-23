@@ -28,27 +28,6 @@ export class Entity {
 	}
 
 	/**
-	 * @description Notify the player of an event
-	 * @example
-	 * export const init_functions = [
-	 *     Player.notify("event_name")
-	 * ]
-	 */
-	notify(flag: string) {
-		return [
-			`self notify("${flag}");`
-		];
-	}
-
-	wait_till(event_name: string) {
-		let output = [
-			`// Player.awaitEvent("${event_name}")`
-		];
-		output.push(`self waittill(${event_name});`);
-		return output;
-	}
-
-	/**
 	 * @description Run a function on the player
 	 * @example
 	 * export const init_functions = [

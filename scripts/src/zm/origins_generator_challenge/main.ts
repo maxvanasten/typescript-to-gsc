@@ -1,4 +1,4 @@
-import Core, { if_statement } from '../../../../library/core';
+import Core, { if_statement, while_loop } from '../../../../library/core';
 import Player from '../../../../library/player';
 import Level from '../../../../library/level';
 import Perks from '../../../../library/lists/perks';
@@ -28,9 +28,17 @@ export const custom_functions = [
 	{
 		name: 'handle_round_change',
 		lines: [
-			Level.wait_till(`"end_of_round"`),
-			Player.set_value('recapture_zone', `maps\\mp\\zm_tomb_capture_zones::get_recapture_zone()`),
-			Core.run_function_on_entity(`maps\\mp\\zm_tomb_capture_zones::init_capture_zone()`, `self.recapture_zone`)
+			while_loop(
+				[
+					`true`
+				],
+				[
+					Level.wait_till(`"end_of_round"`),
+					Player.set_value('recapture_zone', `maps\\mp\\zm_tomb_capture_zones::get_recapture_zone()`),
+					Core.run_function_on_entity(`maps\\mp\\zm_tomb_capture_zones::init_capture_zone()`, `self.recapture_zone`),
+					Core.wait(0.5)
+				]
+			)
 		]
 	},
 	{
@@ -119,9 +127,8 @@ export const init_functions = [
 	Player.set_array('perk_list', perk_list),
 	Core.replace_function_with_custom('maps\\mp\\zm_tomb_capture_zones::get_generator_capture_start_cost', 'get_generator_capture_start_cost'),
 	Core.replace_function_with_custom('maps\\mp\\zm_tomb_capture_zones::reward_players_in_capture_zone', 'reward_players_in_capture_zone'),
-	Core.replace_function_with_custom('maps\\mp\\zm_tomb_capture_zones::get_progress_rate', 'get_progress_rate')
-];
-
-export const update_functions = [
+	Core.replace_function_with_custom('maps\\mp\\zm_tomb_capture_zones::get_progress_rate', 'get_progress_rate'),
 	Core.thread_custom_function('handle_round_change')
 ];
+
+export const update_functions = [];

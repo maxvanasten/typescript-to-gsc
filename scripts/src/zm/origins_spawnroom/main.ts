@@ -39,10 +39,11 @@ export const gungame_weapons = [
 	Weapons.zm_tomb.water_staff.default,
 	Weapons.zm_tomb.air_staff.default,
 
-	Weapons.zm_tomb.ray_gun.default
+	Weapons.zm_tomb.ray_gun.default,
+	Weapons.zm_tomb.raygun_mark2.default
 ];
 
-export const kills_per_promotion = 12;
+export const kills_per_promotion = 10;
 
 export const custom_functions = [
 	{
@@ -59,9 +60,15 @@ export const custom_functions = [
 		lines: [
 			Player.set_value('finished', 1),
 			Player.i_print_ln_bold(`"You have won the challenge!"`),
+			Core.run_custom_function('give_completed_loadout')
+		]
+	},
+	{
+		name: 'give_completed_loadout',
+		lines: [
 			Player.give_perk(Perks.mule_kick),
-			Player.take_current_weapon(),
-			Player.give_weapon(Weapons.zm_tomb.skorpion.upgraded),
+			Player.take_all_weapons(),
+			Player.give_weapon(Weapons.zm_tomb.galil.upgraded),
 			Player.give_weapon(Weapons.zm_tomb.python.upgraded),
 			Player.give_weapon(Weapons.zm_tomb.air_staff.default)
 		]
@@ -69,7 +76,8 @@ export const custom_functions = [
 	{
 		name: 'player_revived_monitor',
 		lines: [
-			Level.wait_till(`"player_revived"`)
+			Level.wait_till(`"player_revived"`),
+			Core.run_custom_function('give_completed_loadout')
 		]
 	},
 	{
@@ -109,11 +117,11 @@ export const init_functions = [
 export const update_functions = [
 	// Core.thread_custom_function('player_revived_monitor'),
 	Player.give_max_ammo(Player.current_weapon),
-	Core.run_custom_function('check_kills'),
+	Core.thread_custom_function('check_kills'),
 	// Check if player has gotten enough kills, but hasnt finished the challenge yet
 	if_statement(
 		[
-			`self.weapon_kills >= ${kills_per_promotion} && !self.finished`
+			`self.weapon_kills >= (${kills_per_promotion} + (self.gun_index * 2)) && !self.finished`
 		],
 		[
 			// Check if there are any guns left or if the player is done with the challenge
@@ -123,11 +131,11 @@ export const update_functions = [
 				],
 				[
 					// Player is done with the challenge
-					Core.run_custom_function('player_wins')
+					Core.thread_custom_function('player_wins')
 				],
 				[
 					// Player should receive the next gun
-					Core.run_custom_function('next_weapon')
+					Core.thread_custom_function('next_weapon')
 				]
 			)
 		]

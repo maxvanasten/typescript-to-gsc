@@ -63,6 +63,7 @@ gpp_init()
 	self.gungame_weapons[self.gungame_weapons.size] = "staff_water_zm";
 	self.gungame_weapons[self.gungame_weapons.size] = "staff_air_zm";
 	self.gungame_weapons[self.gungame_weapons.size] = "ray_gun_zm";
+	self.gungame_weapons[self.gungame_weapons.size] = "raygun_mark2_zm";
 	// setValue() on player
 	self.gun_index = -1;
 	// setValue() on player
@@ -114,23 +115,24 @@ gpp_init()
 	replaceFunc(maps\mp\zm_tomb_capture_zones::get_generator_capture_start_cost, ::gpp_custom_get_generator_capture_start_cost);
 	replaceFunc(maps\mp\zm_tomb_capture_zones::reward_players_in_capture_zone, ::gpp_custom_reward_players_in_capture_zone);
 	replaceFunc(maps\mp\zm_tomb_capture_zones::get_progress_rate, ::gpp_custom_get_progress_rate);
+	self thread gpp_custom_handle_round_change();
 }
 
 gpp_update()
 {	// Player.giveMaxAmmo(self getcurrentweapon())
 	self givemaxammo( self getcurrentweapon() );
-	self gpp_custom_check_kills();
+	self thread gpp_custom_check_kills();
 	// if_statement()
-	if (self.weapon_kills >= 12 && !self.finished)
+	if (self.weapon_kills >= (10 + (self.gun_index * 2)) && !self.finished)
 	{
 		// if_statement()
 		if (self.gun_index >= self.gungame_weapons.size - 1)
 		{
-			self gpp_custom_player_wins();
+			self thread gpp_custom_player_wins();
 		}
 		else
 		{
-			self gpp_custom_next_weapon();
+			self thread gpp_custom_next_weapon();
 		}
 	}
 	// if_statement()
@@ -153,7 +155,6 @@ gpp_update()
 		self thread gpp_custom_update_hud_weapon_kills();
 		self thread gpp_custom_update_hud_weapon();
 	}
-	self thread gpp_custom_handle_round_change();
 }
 
 gpp_custom_next_weapon()
@@ -181,12 +182,24 @@ gpp_custom_player_wins()
 	self.finished = 1;
 	// iPrintLnBold() on player
 	self iprintlnbold("You have won the challenge!");
+	self gpp_custom_give_completed_loadout();
+}
+
+gpp_custom_give_completed_loadout()
+{
 	// givePerk() on player
 	self maps\mp\zombies\_zm_perks::give_perk("specialty_additionalprimaryweapon");
-	// Player.takeCurrentWeapon()
-	self takeWeapon(self getcurrentweapon());
+	// Player.takeAllWeapons()
+	weaponslist = self getweaponslist();
+	for (i = 0; i < weaponslist.size; i++)
+	{
+		if (weaponslist[i] != "knife_zm")
+		{
+			self takeweapon(weaponslist[i]);
+		}
+	}
 	// giveWeapon() on player
-	self giveWeapon("evoskorpion_upgraded_zm");
+	self giveWeapon("galil_upgraded_zm");
 	// giveWeapon() on player
 	self giveWeapon("python_upgraded_zm");
 	// giveWeapon() on player
@@ -195,8 +208,9 @@ gpp_custom_player_wins()
 
 gpp_custom_player_revived_monitor()
 {
-	// Player.awaitEvent(""player_revived"")
-	self waittill("player_revived");
+	// Level.wait_till("player_revived")
+	level waittill("player_revived");
+	self gpp_custom_give_completed_loadout();
 }
 
 gpp_custom_check_kills()
@@ -229,10 +243,10 @@ gpp_custom_update_hud_total_kills()
 gpp_custom_update_hud_weapon_kills()
 {
 	// update() on HudElement 'osc_hud_weapon_kills'
-	if (self.gpp_ui_osc_hud_weapon_kills.stored_value != 12 - self.weapon_kills)
+	if (self.gpp_ui_osc_hud_weapon_kills.stored_value != (10 + (self.gun_index*2)) - self.weapon_kills)
 	{
-		self.gpp_ui_osc_hud_weapon_kills setValue(12 - self.weapon_kills);
-		self.gpp_ui_osc_hud_weapon_kills.stored_value = 12 - self.weapon_kills;
+		self.gpp_ui_osc_hud_weapon_kills setValue((10 + (self.gun_index*2)) - self.weapon_kills);
+		self.gpp_ui_osc_hud_weapon_kills.stored_value = (10 + (self.gun_index*2)) - self.weapon_kills;
 	}
 	wait 0.5;
 }
@@ -240,10 +254,10 @@ gpp_custom_update_hud_weapon_kills()
 gpp_custom_update_hud_weapon()
 {
 	// update() on HudElement 'osc_hud_weapon'
-	if (self.gpp_ui_osc_hud_weapon.stored_value != 26 - self.gun_index)
+	if (self.gpp_ui_osc_hud_weapon.stored_value != 27 - self.gun_index)
 	{
-		self.gpp_ui_osc_hud_weapon setValue(26 - self.gun_index);
-		self.gpp_ui_osc_hud_weapon.stored_value = 26 - self.gun_index;
+		self.gpp_ui_osc_hud_weapon setValue(27 - self.gun_index);
+		self.gpp_ui_osc_hud_weapon.stored_value = 27 - self.gun_index;
 	}
 	wait 0.5;
 }
@@ -267,11 +281,16 @@ gpp_custom_reward_players_in_capture_zone()
 
 gpp_custom_handle_round_change()
 {
-	// Player.awaitEvent(""end_of_round"")
-	self waittill("end_of_round");
-	// setValue() on player
-	self.recapture_zone = maps\mp\zm_tomb_capture_zones::get_recapture_zone();
-	self.recapture_zone maps\mp\zm_tomb_capture_zones::init_capture_zone();
+	// while_loop()
+	while (true)
+	{
+		// Level.wait_till("end_of_round")
+		level waittill("end_of_round");
+		// setValue() on player
+		self.recapture_zone = maps\mp\zm_tomb_capture_zones::get_recapture_zone();
+		self.recapture_zone maps\mp\zm_tomb_capture_zones::init_capture_zone();
+		wait 0.5;
+	}
 }
 
 gpp_custom_player_handler()
