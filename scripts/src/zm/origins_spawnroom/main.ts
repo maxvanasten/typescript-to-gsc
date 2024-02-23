@@ -1,4 +1,4 @@
-import Core, { if_statement } from '../../../../library/core';
+import Core, { if_statement, while_loop } from '../../../../library/core';
 import Player from '../../../../library/player';
 
 import Weapons from '../../../../library/lists/weapons';
@@ -11,11 +11,11 @@ export const gungame_weapons = [
 	Weapons.zm_tomb.fiveseven.default,
 	Weapons.zm_tomb.kard.default,
 
-	Weapons.zm_tomb.ksg.default,
-	Weapons.zm_tomb.m14.default,
-
 	Weapons.zm_tomb.dsr50.default,
 	Weapons.zm_tomb.ballista.default,
+
+	Weapons.zm_tomb.ksg.default,
+	Weapons.zm_tomb.m14.default,
 
 	Weapons.zm_tomb.r870mcs.default,
 	Weapons.zm_tomb.m1216.default,
@@ -76,8 +76,23 @@ export const custom_functions = [
 	{
 		name: 'player_revived_monitor',
 		lines: [
-			Level.wait_till(`"player_revived"`),
-			Core.run_custom_function('give_completed_loadout')
+			while_loop(
+				[
+					`true`
+				],
+				[
+					Level.wait_till(`"player_revived"`),
+					if_statement(
+						[
+							`self.finished`
+						],
+						[
+							Core.run_custom_function('give_completed_loadout')
+						]
+					),
+					Core.wait(0.5)
+				]
+			)
 		]
 	},
 	{
@@ -109,8 +124,9 @@ export const init_functions = [
 	Player.set_value('finished', 0),
 	Player.set_value(`temp_kills`, 0),
 
-	Core.run_custom_function('next_weapon'),
+	Core.thread_custom_function('player_revived_monitor'),
 
+	Core.run_custom_function('next_weapon'),
 	Player.i_print_ln_bold(`"^5Get ^1kills ^5to upgrade your weapon!"`)
 ];
 
