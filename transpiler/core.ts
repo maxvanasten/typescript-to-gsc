@@ -31,6 +31,7 @@ console.time('ts_gsc_complete');
 let targets_finished = 0;
 
 ts_gsc_config.targets.forEach((target) => {
+	if (!target.enable) return console.warn(`Skipping target ${target.name}`);
 	let target_files_loaded: number = 0;
 
 	let include_files: string[] = [];

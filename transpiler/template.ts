@@ -15,6 +15,7 @@ onPlayerConnect()
 onPlayerSpawned()
 {
     self endon("disconnect");
+
     flag_wait("initial_blackscreen_passed");
 
     self thread gpp_init();

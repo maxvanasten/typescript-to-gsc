@@ -1,15 +1,25 @@
 const ts_gsc_config = {
+	clean_output_folder: true,
 	targets: [
 		{
 			name: 'health-and-zombie-counter',
+			enable: true,
 			output_file: './scripts/output/zm/health_and_zombie_counter.gsc',
 			input_files: [
 				'./scripts/src/zm/health_counter/main.ts',
 				'./scripts/src/zm/zombie_counter/main.ts'
 			]
 		},
+		// {
+		// 	name: 'zm-quests',
+		// 	output_file: './scripts/output/zm/zm_quests.gsc',
+		// 	input_files: [
+		// 		'./scripts/src/zm/zm_quests/main.ts'
+		// 	]
+		// }
 		{
 			name: 'origins-spawnroom-challenge',
+			enable: false,
 			output_file: './scripts/output/zm/zm_tomb/origins_spawnroom_challenge.gsc',
 			input_files: [
 				// Main logic
@@ -22,18 +32,36 @@ const ts_gsc_config = {
 		},
 		{
 			name: 'motd-wolf-counter',
+			enable: false,
 			output_file: './scripts/output/zm/zm_prison/wolf-counter.gsc',
 			input_files: [
 				'./scripts/src/zm/motd_wolf_counter/main.ts'
 			]
+		},
+		{
+			name: 'dev-tools',
+			enable: true,
+			output_file: './scripts/output/zm/dev-tools.gsc',
+			input_files: [
+				'./scripts/src/zm/dev_tools/origin_display.ts'
+			]
+		},
+		{
+			name: 'custom-mystery-box',
+			enable: true,
+			output_file: './scripts/output/zm/custom-mystery-box.gsc',
+			input_files: [
+				'./scripts/src/zm/custom_mystery_box/main.ts'
+			]
+		},
+		{
+			name: 'gobblegums',
+			enable: true,
+			output_file: './scripts/output/zm/gobblegums.gsc',
+			input_files: [
+				'./scripts/src/zm/gobblegums/main.ts'
+			]
 		}
-		// {
-		// 	name: 'origins_generator',
-		// 	output_file: './scripts/output/zm/zm_tomb/origins_generator.gsc',
-		// 	input_files: [
-		// 		'./scripts/src/zm/origins_generator_challenge/main.ts'
-		// 	]
-		// }
 	]
 };
 
