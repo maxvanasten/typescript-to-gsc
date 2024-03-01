@@ -42,6 +42,11 @@ const Core = {
 	is_not: (value: number | string) => {
 		return `!${value}`;
 	},
+	raw: (line: string) => {
+		return [
+			`${line};`
+		];
+	},
 	self_ent_flag: (flag_name: string) => {
 		return `self maps\\mp\\zombies\\_zm_utility::ent_flag("${flag_name}")`;
 	},
@@ -58,6 +63,28 @@ const Core = {
 
 		return `maps\\mp\\zombies\\_zm_weapons::get_upgrade_weapon(${weapon_name}, ${add_attachment})`;
 	},
+	include_weapon: (weapon_name: string, in_box: boolean) => {
+		let in_box_n = 0;
+		if (in_box) in_box_n = 1;
+
+		return [
+			`maps\\mp\\zombies\\_zm_utility::include_weapon(${weapon_name}, ${in_box_n});`
+		];
+	},
+	add_zombie_weapon: (
+		default_weapon_name: string,
+		upgraded_weapon_name: string,
+		hint: string,
+		cost: number,
+		weaponvo: string,
+		weaponvoresp: string,
+		ammo_cost: number | undefined,
+		create_vox: number
+	) => {
+		return [
+			`maps\\mp\\zombies\\_zm_weapons::add_zombie_weapon(${default_weapon_name}, ${upgraded_weapon_name}, ${hint}, ${cost}, ${weaponvo}, ${weaponvoresp}, ${ammo_cost}, ${create_vox});`
+		];
+	},
 	run_function_on_entity: (func_call: string, entity: string) => {
 		return [
 			`${entity} ${func_call};`
@@ -65,7 +92,19 @@ const Core = {
 	},
 	random_from_array: (array_name: string) => {
 		return `random(${array_name})`;
-	}
+	},
+
+	make_local_struct: (name: string) => {
+		return [
+			`gpp_struct_${name} = spawnstruct();`
+		];
+	},
+	add_to_struct: (struct_name: string, key: string, value: string | number) => {
+		return [
+			`gpp_struct_${struct_name}.${key} = ${value};`
+		];
+	},
+	map_name: `tolower(getdvar(#"mapname"))`
 };
 
 export default Core;
@@ -123,9 +162,7 @@ export const if_statement = (conditions: string[], true_function: string[][], fa
 		if (index < conditions.length - 1) formatted_conditions += ` && `;
 	});
 
-	let output = [
-		`// if_statement()`
-	];
+	const output: string[] = [];
 	output.push(`if (${formatted_conditions})`);
 	output.push(`{`);
 
@@ -176,9 +213,7 @@ export const while_loop = (conditions: string[], true_function: string[][]) => {
 		if (index < conditions.length - 1) formatted_conditions += ` && `;
 	});
 
-	let output = [
-		`// while_loop()`
-	];
+	const output: string[] = [];
 	output.push(`while (${formatted_conditions})`);
 	output.push(`{`);
 

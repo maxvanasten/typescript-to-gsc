@@ -35,16 +35,13 @@ class PlayerClass extends Entity {
 	 	* ]
 	 	*/
 	give_perk(perk_name: string) {
-		let output = [
-			`// givePerk() on player`
+		return [
+			`self maps\\mp\\zombies\\_zm_perks::give_perk(${perk_name});`
 		];
-		output.push(`self maps\\mp\\zombies\\_zm_perks::give_perk(${perk_name});`);
-		return output;
 	}
 
 	give_max_ammo(weapon_name: string) {
 		let output = [
-			`// Player.giveMaxAmmo(${weapon_name})`,
 			`self givemaxammo( ${weapon_name} );`
 		];
 		return output;
@@ -58,11 +55,9 @@ class PlayerClass extends Entity {
 	 	* ]
 	 	*/
 	i_print_ln_bold(text: string) {
-		let output = [
-			`// iPrintLnBold() on player`
+		return [
+			`self iprintlnbold(${text});`
 		];
-		output.push(`self iprintlnbold(${text});`);
-		return output;
 	}
 
 	/**
@@ -75,11 +70,9 @@ class PlayerClass extends Entity {
 		* ]
 		*/
 	give_weapon(weapon_name: string) {
-		let output = [
-			`// giveWeapon() on player`
+		return [
+			`self giveWeapon(${weapon_name});`
 		];
-		output.push(`self giveWeapon(${weapon_name});`);
-		return output;
 	}
 
 	/**
@@ -93,16 +86,13 @@ class PlayerClass extends Entity {
 	 	* ]
 	 	*/
 	take_weapon(weapon_name: string) {
-		let output = [
-			`// takeWeapon() on player`
+		return [
+			`self takeWeapon(${weapon_name});`
 		];
-		output.push(`self takeWeapon(${weapon_name});`);
-		return output;
 	}
 
 	take_all_weapons() {
-		let output = [
-			`// Player.takeAllWeapons()`,
+		return [
 			`weaponslist = self getweaponslist();`,
 			`for (i = 0; i < weaponslist.size; i++)`,
 			`{`,
@@ -112,7 +102,6 @@ class PlayerClass extends Entity {
 			`\t}`,
 			`}`
 		];
-		return output;
 	}
 
 	/**
@@ -125,19 +114,15 @@ class PlayerClass extends Entity {
 	 * ]
 	 */
 	take_current_weapon() {
-		let output = [
-			`// Player.takeCurrentWeapon()`
+		return [
+			`self takeWeapon(self getcurrentweapon());`
 		];
-		output.push(`self takeWeapon(self getcurrentweapon());`);
-		return output;
 	}
 
 	wait_till(event_name: string) {
-		let output = [
-			`// Player.awaitEvent("${event_name}")`
+		return [
+			`self waittill(${event_name});`
 		];
-		output.push(`self waittill(${event_name});`);
-		return output;
 	}
 
 	/**

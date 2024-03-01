@@ -20,11 +20,9 @@ export class Entity {
 	 	* ];
 	 	*/
 	set_value(field: string, value: string | number): string[] {
-		let output = [
-			`// setValue() on player`
+		return [
+			`self.${field} = ${value};`
 		];
-		output.push(`self.${field} = ${value};`);
-		return output;
 	}
 
 	/**
@@ -42,7 +40,6 @@ export class Entity {
 
 	increment_value(field: string, amount: number | string): string[] {
 		return [
-			`// incrementValue() on player`,
 			`self.${field} += ${amount};`
 		];
 	}
@@ -61,9 +58,7 @@ export class Entity {
 	 	* ]
 		*/
 	set_array(field: string, arr: any[]): string[] {
-		let output = [
-			`// setArray() on player`
-		];
+		const output: string[] = [];
 
 		output.push(`self.${field} = [];`);
 

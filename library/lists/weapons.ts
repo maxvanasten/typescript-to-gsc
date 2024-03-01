@@ -1,3 +1,81 @@
+interface WeaponsList {
+	mp: {
+		[weapon: string]: string;
+	};
+	zm_tomb: {
+		[weapon: string]: {
+			default: string;
+			upgraded?: string;
+			extclip?: string;
+			extclip_upgraded?: string;
+			grenade_launcher?: string;
+		};
+	};
+	zm_prison: {
+		[weapon: string]: {
+			default: string;
+			upgraded?: string;
+			extclip?: string;
+			extclip_upgraded?: string;
+			grenade_launcher?: string;
+		};
+	};
+	zm_buried: {
+		[weapon: string]: {
+			default: string;
+			upgraded?: string;
+			extclip?: string;
+			extclip_upgraded?: string;
+			grenade_launcher?: string;
+		};
+	};
+	zm_highrise: {
+		[weapon: string]: {
+			default: string;
+			upgraded?: string;
+			extclip?: string;
+			extclip_upgraded?: string;
+			grenade_launcher?: string;
+		};
+	};
+	zm_nuked: {
+		[weapon: string]: {
+			default: string;
+			upgraded?: string;
+			extclip?: string;
+			extclip_upgraded?: string;
+			grenade_launcher?: string;
+		};
+	};
+	zm_transit: {
+		[weapon: string]: {
+			default: string;
+			upgraded?: string;
+			extclip?: string;
+			extclip_upgraded?: string;
+			grenade_launcher?: string;
+		};
+	};
+	zm_transit_gump_town: {
+		[weapon: string]: {
+			default: string;
+			upgraded?: string;
+			extclip?: string;
+			extclip_upgraded?: string;
+			grenade_launcher?: string;
+		};
+	};
+	zm_transit_gump_farm: {
+		[weapon: string]: {
+			default: string;
+			upgraded?: string;
+			extclip?: string;
+			extclip_upgraded?: string;
+			grenade_launcher?: string;
+		};
+	};
+}
+
 const Weapons = {
 	mp: {
 		// SMG
@@ -57,9 +135,6 @@ const Weapons = {
 		crossbow_mp: `"crossbow_mp"`,
 		knife_ballistic_mp: `"knife_ballistic_mp"`
 	},
-	zm: {
-		// You can use all of these weapons on any zombies map
-	},
 	zm_tomb: {
 		dsr50: {
 			default: `"dsr50_zm"`,
@@ -90,6 +165,9 @@ const Weapons = {
 		mp40: {
 			default: `"mp40_zm"`,
 			upgraded: `"mp40_upgraded_zm"`
+		},
+		mp40_stalker: {
+			default: `"mp40_stalker_zm"`
 		},
 		skorpion: {
 			default: `"evoskorpion_zm"`,
@@ -162,6 +240,9 @@ const Weapons = {
 		beretta93r: {
 			default: `"beretta93r_zm"`,
 			upgraded: `"beretta93r_upgraded_zm"`
+		},
+		beretta93r_extclip: {
+			default: `"beretta93r_extclip_zm"`
 		},
 		m32: {
 			default: `"m32_zm"`,

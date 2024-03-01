@@ -99,11 +99,9 @@ export default class HudElement {
 	 * hud_element.setAlpha(0.5);
 	 */
 	setAlpha(alpha: number) {
-		let output = [
-			`// setAlpha() on HudElement '${this.options.name}'`
+		return [
+			`self.gpp_ui_${this.options.name}.alpha = ${alpha};`
 		];
-		output.push(`self.gpp_ui_${this.options.name}.alpha = ${alpha};`);
-		return output;
 	}
 
 	/**export
@@ -114,9 +112,7 @@ export default class HudElement {
 	 * ];
 	 */
 	init() {
-		let output = [
-			`// init() on HudElement '${this.options.name}'`
-		];
+		const output: string[] = [];
 
 		output.push(`self.gpp_ui_${this.options.name} = createFontString("${this.options.font.name}", ${this.options.font.size});`);
 
@@ -129,14 +125,12 @@ export default class HudElement {
 		output.push(`self.gpp_ui_${this.options.name}.hidewheninmenu = ${this.options.hidewheninmenu || true};`);
 		output.push(`self.gpp_ui_${this.options.name}.hidewhendead = ${this.options.hidewhendead || true};`);
 
-		// Color
 		if (this.options.color) {
 			output.push(`self.gpp_ui_${this.options.name}.color = (${this.options.color.r}, ${this.options.color.g}, ${this.options.color.b});`);
 		} else {
 			output.push(`self.gpp_ui_${this.options.name}.color = (1, 1, 1);`);
 		}
 
-		// Text
 		if (this.options.type && this.options.type == 'number') {
 			output.push(`self.gpp_ui_${this.options.name} setValue(${this.options.value || 0});`);
 			output.push(`self.gpp_ui_${this.options.name}.label = &"${this.options.label || 'unlabeled'}";`);
@@ -157,9 +151,7 @@ export default class HudElement {
 	 * ];
 	 */
 	update(new_value: string) {
-		let output = [
-			`// update() on HudElement '${this.options.name}'`
-		];
+		const output: string[] = [];
 
 		if (this.options.type && this.options.type == 'number') {
 			output.push(`if (self.gpp_ui_${this.options.name}.stored_value != ${new_value})`);
