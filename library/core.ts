@@ -70,6 +70,33 @@ const Core = {
 
 export default Core;
 
+export const switch_statement = (key: string, cases: { case: string; do: string[][] }[], default_behaviour: string[][]) => {
+	let output = [
+		`switch(${key}) {`
+	];
+
+	cases.forEach((c) => {
+		output.push(`\tcase ${c.case}:`);
+		c.do.forEach((do_line) => {
+			do_line.forEach((line) => {
+				output.push(`\t\t${line}`);
+			});
+		});
+		output.push(`\t\tbreak;`);
+	});
+
+	output.push(`\tdefault:`);
+	default_behaviour.forEach((do_line) => {
+		do_line.forEach((line) => {
+			output.push(`\t\t${line}`);
+		});
+	});
+
+	output.push(`}`);
+
+	return output;
+};
+
 /**
  * @description A standard if statement
  * @example
