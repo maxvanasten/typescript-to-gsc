@@ -18,11 +18,11 @@ onPlayerSpawned()
 
     flag_wait("initial_blackscreen_passed");
 
-    self thread gpp_init();
+    self thread ttg_init();
 
     for ( ;; )
     {
-        self thread gpp_update();
+        self thread ttg_update();
         wait 0.05;
     }
 }

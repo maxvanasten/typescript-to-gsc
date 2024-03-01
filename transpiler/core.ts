@@ -92,7 +92,7 @@ const transpile = (
 	fs.appendFileSync(output_file, TEMPLATE);
 
 	// Append init functions
-	let init_section = `gpp_init()\n{\n\tself iPrintLn("[^2${name}^7] This script was made using ts_gsc, the TypeScript to GSC transpiler! (^5https://github.com/maxvanasten/ts_gsc^7)");\n`;
+	let init_section = `ttg_init()\n{\n\tself iPrintLn("[^2${name}^7] This script was made using ts_gsc, the TypeScript to GSC transpiler! (^5https://github.com/maxvanasten/ts_gsc^7)");\n`;
 	init.forEach((func) => {
 		func.forEach((line) => {
 			init_section += `\t${line}\n`;
@@ -102,7 +102,7 @@ const transpile = (
 	fs.appendFileSync(output_file, init_section);
 
 	// Append update functions
-	let update_section = `gpp_update()\n{`;
+	let update_section = `ttg_update()\n{\n`;
 	update.forEach((func) => {
 		func.forEach((line) => {
 			update_section += `\t${line}\n`;
@@ -124,7 +124,7 @@ const transpile = (
 				formatted_arguments = formatted_arguments.slice(0, formatted_arguments.length - 2);
 			}
 
-			let output = `gpp_custom_${custom_func.name}(${formatted_arguments})\n{\n`;
+			let output = `${custom_func.name}(${formatted_arguments})\n{\n`;
 
 			custom_func.lines.forEach((func) => {
 				func.forEach((line) => {
