@@ -5,30 +5,30 @@ import ts_gsc_config from '../config';
 // The default template for ts_gsc scripts
 import { TEMPLATE } from './template';
 
-// Fix output folder
-if (fs.existsSync('./scripts/output/mp')) fs.rmSync('./scripts/output/mp', { recursive: true, force: true });
-if (fs.existsSync('./scripts/output/zm')) fs.rmSync('./scripts/output/zm', { recursive: true, force: true });
+const clean_output_folder = () => {
+	if (fs.existsSync('./scripts/output/mp')) fs.rmSync('./scripts/output/mp', { recursive: true, force: true });
+	if (fs.existsSync('./scripts/output/zm')) fs.rmSync('./scripts/output/zm', { recursive: true, force: true });
 
-fs.mkdirSync('./scripts/output/mp');
-fs.mkdirSync('./scripts/output/zm');
+	fs.mkdirSync('./scripts/output/mp');
+	fs.mkdirSync('./scripts/output/zm');
 
-const zombie_maps = [
-	'zm_tomb',
-	'zm_prison',
-	'zm_nuked',
-	'zm_buried',
-	'zm_transit',
-	'zm_highrise',
-	'zm_transit_gump_town',
-	'zm_transit_gump_farm'
-];
+	const zombie_maps = [
+		'zm_tomb',
+		'zm_prison',
+		'zm_buried',
+		'zm_transit',
+		'zm_highrise'
+	];
 
-zombie_maps.forEach((zombie_map) => {
-	if (!fs.existsSync(`./scripts/output/zm/${zombie_map}`)) fs.mkdirSync(`./scripts/output/zm/${zombie_map}`);
-});
+	zombie_maps.forEach((zombie_map) => {
+		if (!fs.existsSync(`./scripts/output/zm/${zombie_map}`)) fs.mkdirSync(`./scripts/output/zm/${zombie_map}`);
+	});
+};
 
 console.time('ts_gsc_complete');
 let targets_finished = 0;
+
+if (ts_gsc_config.clean_output_folder) clean_output_folder();
 
 ts_gsc_config.targets.forEach((target) => {
 	if (!target.enable) return console.warn(`Skipping target ${target.name}`);
