@@ -59,7 +59,7 @@ const push_weapon = (weapon_name: string) => {
 	return [
 		Core.make_local_struct(`temp`),
 		Core.add_to_struct(`temp`, 'weapon_name', weapon_name),
-		Level.set_value(`zombie_weapons[${weapon_name}]`, `gpp_struct_temp`)
+		Level.set_value(`zombie_weapons[${weapon_name}]`, `temp`)
 	];
 };
 
