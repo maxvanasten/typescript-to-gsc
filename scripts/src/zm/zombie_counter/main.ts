@@ -7,7 +7,7 @@ const hud_element = new HudElement({
 	font: Font.default(),
 	point: new Point('CENTER', 'CENTER', 0, 215),
 	type: 'number',
-	label: 'Zombies: ^1',
+	label: '^5Zombies: ^1',
 	value: 0
 });
 

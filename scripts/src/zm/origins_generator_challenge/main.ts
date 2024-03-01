@@ -131,4 +131,6 @@ export const init_functions = [
 	Core.thread_custom_function('handle_round_change')
 ];
 
+export const pre_init_functions = [];
+
 export const update_functions = [];

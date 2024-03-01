@@ -1,12 +1,12 @@
 import HudElement, { Font, Point } from '../../../../library/hud_element';
-import Core, { if_statement } from '../../../../library/core';
+import Core from '../../../../library/core';
 
 const hud_element = new HudElement({
 	name: 'health_counter',
 	font: Font.default(),
 	point: new Point('CENTER', 'CENTER', 0, 200),
 	type: 'number',
-	label: 'Health: ^6',
+	label: '^5Health: ^6',
 	value: 0
 });
 
