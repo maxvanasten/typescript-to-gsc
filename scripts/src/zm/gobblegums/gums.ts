@@ -10,7 +10,7 @@ export type Gobblegum = {
 	activations: number;
 	activate_function: {
 		name: string;
-		arguments: string[];
+		arguments?: string[];
 		lines: string[][];
 	};
 };
@@ -25,9 +25,12 @@ export const gobblegums: Gobblegum[] = [
 			name: 'gg_ips',
 			arguments: [],
 			lines: [
-				Player.i_print_ln_bold(`"^5ACTIVATE"`),
+				Player.set_value('ignoreme', `true`),
+
+				Player.set_value('gobblegum_cooldown', 10),
 				Core.wait(10),
-				Player.i_print_ln_bold(`"^1DEACTIVATE"`)
+
+				Player.set_value('ignoreme', `false`)
 			]
 		}
 	}

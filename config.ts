@@ -59,7 +59,8 @@ const ts_gsc_config = {
 			enable: true,
 			output_file: './scripts/output/zm/gobblegums.gsc',
 			input_files: [
-				'./scripts/src/zm/gobblegums/main.ts'
+				'./scripts/src/zm/gobblegums/main.ts',
+				'./scripts/src/zm/gobblegums/hud.ts'
 			]
 		}
 	]
