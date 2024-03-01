@@ -21,16 +21,16 @@ onPlayerSpawned()
 
     flag_wait("initial_blackscreen_passed");
 
-    self thread gpp_init();
+    self thread ttg_init();
 
     for ( ;; )
     {
-        self thread gpp_update();
+        self thread ttg_update();
         wait 0.05;
     }
 }
 
-gpp_init()
+ttg_init()
 {
 	self iPrintLn("[^2health-and-zombie-counter^7] This script was made using ts_gsc, the TypeScript to GSC transpiler! (^5https://github.com/maxvanasten/ts_gsc^7)");
 	self.gpp_ui_health_counter = createFontString("objective", 1.5);
@@ -53,13 +53,14 @@ gpp_init()
 	self.gpp_ui_zombie_counter.stored_value = 0;
 }
 
-gpp_update()
-{	self thread gpp_custom_update_hud_health_counter();
+ttg_update()
+{
+	self thread update_hud_health_counter();
 	self.zombies_left = level.zombie_total + get_current_zombie_count();
-	self thread gpp_custom_update_hud_zombie_counter();
+	self thread update_hud_zombie_counter();
 }
 
-gpp_custom_update_hud_health_counter()
+update_hud_health_counter()
 {
 	if (self.gpp_ui_health_counter.stored_value != self.health)
 	{
@@ -69,7 +70,7 @@ gpp_custom_update_hud_health_counter()
 	wait 0.5;
 }
 
-gpp_custom_update_hud_zombie_counter()
+update_hud_zombie_counter()
 {
 	if (self.gpp_ui_zombie_counter.stored_value != self.zombies_left)
 	{

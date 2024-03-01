@@ -20,16 +20,16 @@ onPlayerSpawned()
 
     flag_wait("initial_blackscreen_passed");
 
-    self thread gpp_init();
+    self thread ttg_init();
 
     for ( ;; )
     {
-        self thread gpp_update();
+        self thread ttg_update();
         wait 0.05;
     }
 }
 
-gpp_init()
+ttg_init()
 {
 	self iPrintLn("[^2dev-tools^7] This script was made using ts_gsc, the TypeScript to GSC transpiler! (^5https://github.com/maxvanasten/ts_gsc^7)");
 	self.gpp_ui_origin_x = createFontString("objective", 1.5);
@@ -77,8 +77,9 @@ gpp_init()
 	self.gpp_ui_map.stored_text = "^5map_name: ^7"+tolower(getdvar(#"mapname"));
 }
 
-gpp_update()
-{	if (self.gpp_ui_origin_x.stored_value != self.origin[0])
+ttg_update()
+{
+	if (self.gpp_ui_origin_x.stored_value != self.origin[0])
 	{
 		self.gpp_ui_origin_x setValue(self.origin[0]);
 		self.gpp_ui_origin_x.stored_value = self.origin[0];

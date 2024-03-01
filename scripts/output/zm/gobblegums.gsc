@@ -19,30 +19,21 @@ onPlayerSpawned()
 
     flag_wait("initial_blackscreen_passed");
 
-    self thread gpp_init();
+    self thread ttg_init();
 
     for ( ;; )
     {
-        self thread gpp_update();
+        self thread ttg_update();
         wait 0.05;
     }
 }
 
-gpp_init()
+ttg_init()
 {
 	self iPrintLn("[^2gobblegums^7] This script was made using ts_gsc, the TypeScript to GSC transpiler! (^5https://github.com/maxvanasten/ts_gsc^7)");
 }
 
-gpp_update()
-{}
-
-gpp_custom_player_load_gobblegum(index)
-{
-	self.current_gobblegum_index = index;
-	self.gobblegum_activations = level.gobblegums[self.current_gobblegum_index].activations;
-}
-
-gpp_custom_activation_monitor()
+ttg_update()
 {
 	while (true)
 	{

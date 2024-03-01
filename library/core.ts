@@ -11,12 +11,12 @@ const Core = {
 	},
 	run_custom_function: (function_name: string) => {
 		return [
-			`self gpp_custom_${function_name}();`
+			`self ${function_name}();`
 		];
 	},
 	thread_custom_function: (function_name: string) => {
 		return [
-			`self thread gpp_custom_${function_name}();`
+			`self thread ${function_name}();`
 		];
 	},
 	wait: (time: number) => {
@@ -31,7 +31,7 @@ const Core = {
 	},
 	replace_function_with_custom: (default_function_path: string, custom_function_name: string) => {
 		return [
-			`replaceFunc(${default_function_path}, ::gpp_custom_${custom_function_name});`
+			`replaceFunc(${default_function_path}, ::${custom_function_name});`
 		];
 	},
 	set_local_variable: (variable_name: string, value: number | string) => {
@@ -54,7 +54,7 @@ const Core = {
 		return [
 			`foreach (${name} in ${obj})`,
 			`{`,
-			`\t${name} gpp_custom_${custom_function_name}();`,
+			`\t${name} ${custom_function_name}();`,
 			`}`
 		];
 	},
@@ -96,12 +96,12 @@ const Core = {
 
 	make_local_struct: (name: string) => {
 		return [
-			`gpp_struct_${name} = spawnstruct();`
+			`${name} = spawnstruct();`
 		];
 	},
 	add_to_struct: (struct_name: string, key: string, value: string | number) => {
 		return [
-			`gpp_struct_${struct_name}.${key} = ${value};`
+			`${struct_name}.${key} = ${value};`
 		];
 	},
 	map_name: `tolower(getdvar(#"mapname"))`

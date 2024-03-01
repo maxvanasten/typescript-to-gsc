@@ -121,7 +121,7 @@ class PlayerClass extends Entity {
 
 	wait_till(event_name: string) {
 		return [
-			`self waittill(${event_name});`
+			`self waittill("${event_name}");`
 		];
 	}
 
