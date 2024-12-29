@@ -107,24 +107,27 @@ class PlayerClass extends Entity {
         return [`self takeWeapon(self getcurrentweapon());`];
     }
 
-	wait_till(event_name: string) {
-		return [
-			`self waittill("${event_name}");`
-		];
-	}
+    wait_till(event_name: string, target: string) {
+        if (target) {
+            return [`self waittill("${event_name}", ${target});`];
+        }
+        return [`self waittill("${event_name}");`];
+    }
 
-	/**
-	 * @description Notify the player of an event
-	 * @example
-	 * export const init_functions = [
-	 *     Player.notify("event_name")
-	 * ]
-	 */
-	notify(flag: string) {
-		return [
-			`self notify("${flag}");`
-		];
-	}
+    endon(event_name: string) {
+        return `self endon("${event_name}");`;
+    }
+
+    /**
+     * @description Notify the player of an event
+     * @example
+     * export const init_functions = [
+     *     Player.notify("event_name")
+     * ]
+     */
+    notify(flag: string) {
+        return [`self notify("${flag}");`];
+    }
 }
 
 const Player = new PlayerClass();

@@ -27,6 +27,12 @@ class LevelClass extends Entity {
         return [`level.${field} = ${value};`];
     }
 
+    /**
+     * @description Ends thread when an event to take place
+     */
+    endon(event_name: string): string[] {
+        return [`level endon("${event_name}");`];
+    }
 
     /**
      * @description Sets an array `field` on the player with the contents `arr`. If `is_string = true` then the items will be added to the array as strings.

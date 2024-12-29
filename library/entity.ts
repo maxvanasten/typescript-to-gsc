@@ -34,11 +34,17 @@ export class Entity {
         return [`self ${function_call};`];
     }
 
+    run_threaded_function(function_call: string) {
+        return [`self thread ${function_call};`];
+    }
 
     increment_value(field: string, amount: number | string): string[] {
         return [`self.${field} += ${amount};`];
     }
 
+    decrement_value(field: string, amount: number | string): string[] {
+        return [`self.${field} -= ${amount};`];
+    }
 
     /**
      * @description Sets an array `field` on the player with the contents `arr`. If `is_string = true` then the items will be added to the array as strings.
