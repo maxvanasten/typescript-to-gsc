@@ -5,7 +5,10 @@ import Player from "../../../../library/player";
 import { gobblegums, powerup_list } from "./gums";
 import { gobblegum_hud_description } from "./hud";
 
-//TODO: Only allow the machine once a round
+// TODO: Add more gobblegum
+// TODO: Add multiple gobblegum machines (3 per map(?))
+// TODO: Add some sort of animation for using a gobblegum
+// TODO: Fix text prompts to work smoothly
 
 const gobblegum_list: string[] = [];
 gobblegums.forEach((g) => gobblegum_list.push(`"${g.identifier}"`));
