@@ -53,6 +53,12 @@ class PlayerClass extends Entity {
     i_print_ln_bold(text: string) {
         return [`self iprintlnbold(${text});`];
     }
+    a_i_print_ln_bold(text: string) {
+        return [`player iprintlnbold(${text});`];
+    }
+    i_print_ln(text: string) {
+        return [`self iPrintLn(${text});`];
+    }
 
     /**
      * @description Gives a weapon to the player

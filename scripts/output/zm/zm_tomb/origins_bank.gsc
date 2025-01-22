@@ -52,7 +52,7 @@ setup_bank_deposit()
 		trigger_deposit waittill("trigger", player);
 		if (player usebuttonpressed())
 		{
-			self thread deposit();
+			player thread deposit();
 			wait 0.5;
 		}
 		wait 0.05;
@@ -71,7 +71,7 @@ setup_bank_withdrawal()
 		trigger_withdraw waittill("trigger", player);
 		if (player usebuttonpressed())
 		{
-			self thread withdraw();
+			player thread withdraw();
 			wait 0.5;
 		}
 		wait 0.05;

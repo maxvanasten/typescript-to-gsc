@@ -1,7 +1,4 @@
-import Core, { if_statement, switch_statement, while_loop } from '../../../../library/core';
-import Player from '../../../../library/player';
-import Level from '../../../../library/level';
-import Perks from '../../../../library/lists/perks';
+import Core from '../../../../library/core';
 import HudElement, { Font, Point } from '../../../../library/hud_element';
 
 export const include_files = [
@@ -11,23 +8,25 @@ export const include_files = [
 const gobblegum_hud_title = new HudElement({
 	name: 'gg_hud_title',
 	font: Font.default(),
-	point: new Point('center', 'center', -200, -50),
+	point: new Point('center', 'center', -300, 100),
 	type: 'string',
 	text: `"^1Aim + f to use gobblegum"`
 });
-const gobblegum_hud_description = new HudElement({
+export const gobblegum_hud_description = new HudElement({
 	name: 'gg_hud_description',
 	font: new Font('objective', 1),
-	point: new Point('center', 'center', -200, -20),
+	point: new Point('center', 'center', -300, 130),
 	type: 'string',
-	text: `"-"`
+	text: `"You don't have a gobblegum."`
 });
 
 export const init_functions = [
+	Core.log(`"Init title"`),
 	gobblegum_hud_title.init(),
+	Core.log(`"Init desc"`),
 	gobblegum_hud_description.init(),
 	gobblegum_hud_title.setAlpha(0.5),
-	gobblegum_hud_description.setAlpha(0)
+	gobblegum_hud_description.setAlpha(0.5)
 ];
 
 export const custom_functions = [
@@ -45,10 +44,11 @@ export const custom_functions = [
 			gobblegum_hud_description.setAlpha(0.5),
 
 			Core.raw(`wait duration`),
-			gobblegum_hud_title.setAlpha(0),
-			gobblegum_hud_description.setAlpha(0)
+			gobblegum_hud_title.update(`"^1Aim + f to use gobblegum"`),
+			gobblegum_hud_description.update(`"You don't have a gobblegum."`),
+			gobblegum_hud_title.setAlpha(0.5),
+			gobblegum_hud_description.setAlpha(0.5)
+
 		]
 	}
 ];
-
-export const update_functions = [];

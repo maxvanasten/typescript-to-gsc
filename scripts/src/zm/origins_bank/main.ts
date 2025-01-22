@@ -33,7 +33,10 @@ export const custom_functions = [
                     if_statement(
                         [`player usebuttonpressed()`],
                         [
-                            Player.run_threaded_function(`deposit()`),
+                            Core.run_threaded_function_on_entity(
+                                `deposit()`,
+                                "player"
+                            ),
                             Core.wait(0.5),
                         ]
                     ),
@@ -71,7 +74,10 @@ export const custom_functions = [
                     if_statement(
                         [`player usebuttonpressed()`],
                         [
-                            Player.run_threaded_function(`withdraw()`),
+                            Core.run_threaded_function_on_entity(
+                                `withdraw()`,
+                                "player"
+                            ),
                             Core.wait(0.5),
                         ]
                     ),
