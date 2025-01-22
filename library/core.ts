@@ -14,7 +14,7 @@ const Core = {
     run_threaded_function_on_entity: (func_call: string, entity: string) => {
         return [`${entity} thread ${func_call};`];
     },
-    wait: (time: number) => {
+    wait: (time: number | string) => {
         return [`wait ${time};`];
     },
     return: (value: number | string) => {
