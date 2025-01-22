@@ -158,44 +158,42 @@ export const update_functions: string[][] = [
                             {
                                 case: `"in_plain_sight"`,
                                 do: [
-                                    Core.raw(
-                                        `self thread hud_activation("In plain sight!", "Zombies ignore the player for 10 seconds.", 7)`
-                                    ),
-                                    Core.raw(`self thread gg_in_plain_sight()`),
+                                    Player.run_threaded_function(`hud_activation("In plain sight!", "Zombies ignore the player for 10 seconds.", 7)`),
+                                    Player.run_threaded_function(`gg_in_plain_sight()`)
                                 ],
                             },
                             // {
                             //     case: `"powerup"`,
                             //     do: [
-                            //         Core.raw(`self thread hud_activation("Powerup!", "Activates random powerup", 7)`),
-                            //         Core.raw(`self thread gg_powerup()`)
+                            //         Player.run_threaded_function(`hud_activation("Powerup!", "Activates random powerup", 7)`),
+                            //         Player.run_threaded_function(`gg_powerup()`)
                             //     ]
                             // },
                             {
                                 case: `"resupply"`,
                                 do: [
-                                    Core.raw(`self thread hud_activation("Resupply!", "Activates a max ammo.", 7)`),
-                                    Core.raw(`self thread gg_resupply()`)
+                                    Player.run_threaded_function(`hud_activation("Resupply!", "Activates a max ammo.", 7)`),
+                                    Player.run_threaded_function(`gg_resupply()`)
                                 ]
                             },
                             {
                                 case: `"multiplier"`,
                                 do: [
-                                    Core.raw(`self thread hud_activation("Multiplier!", "Activates a double points.", 7)`),
-                                    Core.raw(`self thread gg_multiplier()`)
+                                    Player.run_threaded_function(`hud_activation("Multiplier!", "Activates a double points.", 7)`),
+                                    Player.run_threaded_function(`gg_multiplier()`)
                                 ]
                             },
                             {
                                 case: `"perkdrop"`,
                                 do: [
-                                    Core.raw(`self thread hud_activation("Perk drop!", "Activates a random perk", 7)`),
-                                    Core.raw(`self thread gg_perkdrop()`)
+                                    Player.run_threaded_function(`hud_activation("Perk drop!", "Activates a random perk", 7)`),
+                                    Player.run_threaded_function(`gg_perkdrop()`)
                                 ]
                             }
                         ],
                         []
                     ),
-                    Core.raw(`self.gobblegum_identifier = "none"`),
+                    Player.set_value("gobblegum_identifier", `"none"`),
                 ]
             ),
         ],

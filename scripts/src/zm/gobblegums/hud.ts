@@ -43,7 +43,7 @@ export const custom_functions = [
 			gobblegum_hud_title.setAlpha(0.8),
 			gobblegum_hud_description.setAlpha(0.5),
 
-			Core.raw(`wait duration`),
+			Core.wait("duration"),
 			gobblegum_hud_title.update(`"^1Aim + f to use gobblegum"`),
 			gobblegum_hud_description.update(`"You don't have a gobblegum."`),
 			gobblegum_hud_title.setAlpha(0.5),
