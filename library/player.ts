@@ -74,6 +74,26 @@ class PlayerClass extends Entity {
     }
 
     /**
+     * @description Upgrades the weapon the player is holding
+     * @example
+     * export const init = [
+     *    player.upgrade_held_weapon()
+     * ]
+     */
+    upgrade_held_weapon() {
+        return [
+            `current_weapon = self getcurrentweapon();`,
+            `upgraded_weapon = maps\\mp\\zombies\\_zm_weapons::get_upgrade_weapon(current_weapon, 1);`,
+            `if (isdefined(upgraded_weapon)) {`,
+            `\tself takeweapon(current_weapon);`,
+            `\tself giveweapon( upgraded_weapon, 0, self maps\\mp\\zombies\\_zm_weapons::get_pack_a_punch_weapon_options( upgraded_weapon ) );`,
+            `\tself givestartammo( upgraded_weapon );`,
+            `\tself switchtoweapon( upgraded_weapon );`,
+            `}`,
+        ];
+    }
+
+    /**
      * @description Takes a weapon from the player
      * @example
      * import Player from './lib/player';

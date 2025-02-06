@@ -14,6 +14,9 @@ const Core = {
     run_threaded_function_on_entity: (func_call: string, entity: string) => {
         return [`${entity} thread ${func_call};`];
     },
+    pre_cache_model: (model: string) => {
+        return [`precacheModel(${model});`];
+    },
     wait: (time: number | string) => {
         return [`wait ${time};`];
     },
@@ -49,6 +52,18 @@ const Core = {
             `foreach (${name} in ${obj})`,
             `{`,
             `\t${name} ${custom_function_name}();`,
+            `}`,
+        ];
+    },
+    for_each_run_custom_arg: (
+        name: string,
+        obj: string,
+        custom_function_name: string
+    ) => {
+        return [
+            `foreach (${name} in ${obj})`,
+            `{`,
+            `\t${custom_function_name}(${name});`,
             `}`,
         ];
     },
@@ -97,6 +112,9 @@ const Core = {
         return [`${struct_name}.${key} = ${value};`];
     },
     map_name: `tolower(getdvar(#"mapname"))`,
+    spawn: (entity: string, x: number, y: number, z: number) => {
+        return `spawn(${entity}, (${x}, ${y}, ${z}))`;
+    }
 };
 
 export default Core;
