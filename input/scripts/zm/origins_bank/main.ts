@@ -1,15 +1,20 @@
 // Add a bank to the origins map
 import Core, { if_statement, while_loop } from "../../../../library/core";
-import Player from "../../../../library/player";
 import Level from "../../../../library/level";
-import Perks from "../../../../library/lists/perks";
+import Player from "../../../../library/player";
 
 export const custom_functions = [
+    {
+        name: "get_bank_origin",
+        lines: [
+            Core.return(`(1955, 4851, -270)`),
+        ]
+    },
     {
         name: "setup_bank_deposit",
         lines: [
             Level.endon("end_game"),
-            Core.set_local_variable("origin", "(1955, 4851, -270)"),
+            Core.set_local_variable("origin", "get_bank_origin()"),
             Core.set_local_variable(
                 "trigger_deposit",
                 `spawn("trigger_radius", origin, 0, 50, 50)`

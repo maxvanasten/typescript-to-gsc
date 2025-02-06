@@ -40,10 +40,15 @@ ttg_update()
 {
 }
 
+get_bank_origin()
+{
+	return (1955, 4851, -270);
+}
+
 setup_bank_deposit()
 {
 	level endon("end_game");
-	origin = (1955, 4851, -270);
+	origin = get_bank_origin();
 	trigger_deposit = spawn("trigger_radius", origin, 0, 50, 50);
 	trigger_deposit setCursorHint("HINT_NOICON");
 	trigger_deposit setHintString("^3[{+activate}]^7 to deposit 1000 points to the bank");
