@@ -1,54 +1,46 @@
-import Core from '../../../../library/core';
+import Core, { if_statement } from '../../../../library/core';
 import HudElement, { Font, Point } from '../../../../library/hud_element';
 
 export const include_files = [
 	'maps\\mp\\gametypes_zm\\_hud_util'
 ];
 
-const gobblegum_hud_title = new HudElement({
-	name: 'gg_hud_title',
+const hud_x = -225;
+const hud_y = -205;
+
+export const gobblegum_hud = new HudElement({
+	name: 'gg_hud',
 	font: Font.default(),
-	point: new Point('center', 'center', -300, 100),
+	point: new Point('CENTER', 'CENTER', hud_x, hud_y + 45),
 	type: 'string',
-	text: `"^1Aim + f to use gobblegum"`
-});
-export const gobblegum_hud_description = new HudElement({
-	name: 'gg_hud_description',
-	font: new Font('objective', 1),
-	point: new Point('center', 'center', -300, 130),
-	type: 'string',
-	text: `"You don't have a gobblegum."`
-});
+	text: `"^6No gobblegum"`
+})
 
 export const init_functions = [
-	Core.log(`"Init title"`),
-	gobblegum_hud_title.init(),
-	Core.log(`"Init desc"`),
-	gobblegum_hud_description.init(),
-	gobblegum_hud_title.setAlpha(0.5),
-	gobblegum_hud_description.setAlpha(0.5)
+	gobblegum_hud.init(),
 ];
 
 export const custom_functions = [
 	{
 		name: 'hud_activation',
 		arguments: [
-			'title',
-			'description',
-			'duration'
+			'text',
+			'duration',
+			'empty'
 		],
 		lines: [
-			gobblegum_hud_title.update(`title`),
-			gobblegum_hud_description.update(`description`),
-			gobblegum_hud_title.setAlpha(0.8),
-			gobblegum_hud_description.setAlpha(0.5),
-
+			Core.set_local_variable('current_text', `self.gpp_ui_gg_hud.stored_text`),
+			gobblegum_hud.update(`"^6" + text`),
 			Core.wait("duration"),
-			gobblegum_hud_title.update(`"^1Aim + f to use gobblegum"`),
-			gobblegum_hud_description.update(`"You don't have a gobblegum."`),
-			gobblegum_hud_title.setAlpha(0.5),
-			gobblegum_hud_description.setAlpha(0.5)
-
+			if_statement(
+				['empty'],
+				[
+					gobblegum_hud.update(`"^6No gobblegum"`),
+				],
+				[
+					gobblegum_hud.update(`current_text`),
+				]
+			),
 		]
 	}
 ];

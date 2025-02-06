@@ -10,16 +10,17 @@ const ts_gsc_config = {
                 "./scripts/src/zm/zombie_counter/main.ts",
             ],
         },
-        // {
-        // 	name: 'zm-quests',
-        // 	output_file: './scripts/output/zm/zm_quests.gsc',
-        // 	input_files: [
-        // 		'./scripts/src/zm/zm_quests/main.ts'
-        // 	]
-        // }
+        {
+            name: 'zm-quests',
+            enable: false,
+            output_file: './scripts/output/zm/zm_quests.gsc',
+            input_files: [
+                './scripts/src/zm/zm_quests/main.ts'
+            ]
+        },
         {
             name: "origins-spawnroom-challenge",
-            enable: true,
+            enable: false,
             output_file:
                 "./scripts/output/zm/zm_tomb/origins_spawnroom_challenge.gsc",
             input_files: [
@@ -33,25 +34,25 @@ const ts_gsc_config = {
         },
         {
             name: "motd-wolf-counter",
-            enable: true,
+            enable: false,
             output_file: "./scripts/output/zm/zm_prison/wolf-counter.gsc",
             input_files: ["./scripts/src/zm/motd_wolf_counter/main.ts"],
         },
         {
             name: "dev-tools",
-            enable: true,
+            enable: false,
             output_file: "./scripts/output/zm/dev-tools.gsc",
             input_files: ["./scripts/src/zm/dev_tools/origin_display.ts"],
         },
         {
             name: "custom-mystery-box",
-            enable: true,
+            enable: false,
             output_file: "./scripts/output/zm/custom-mystery-box.gsc",
             input_files: ["./scripts/src/zm/custom_mystery_box/main.ts"],
         },
         {
             name: "gobblegums",
-            enable: true,
+            enable: false,
             output_file: "./scripts/output/zm/gobblegums.gsc",
             input_files: [
                 "./scripts/src/zm/gobblegums/main.ts",
@@ -60,7 +61,7 @@ const ts_gsc_config = {
         },
         {
             name: "origins-bank",
-            enable: true,
+            enable: false,
             output_file: "./scripts/output/zm/zm_tomb/origins_bank.gsc",
             input_files: [
                 "./scripts/src/zm/origins_bank/main.ts",

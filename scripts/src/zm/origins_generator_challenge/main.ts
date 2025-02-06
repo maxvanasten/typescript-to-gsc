@@ -1,7 +1,7 @@
 import Core, { if_statement, while_loop } from "../../../../library/core";
-import Player from "../../../../library/player";
 import Level from "../../../../library/level";
 import Perks from "../../../../library/lists/perks";
+import Player from "../../../../library/player";
 
 export const custom_functions = [
     {
@@ -83,8 +83,43 @@ export const custom_functions = [
             // Core.log(`"upgraded_weapon_name: "+self.upgraded_weapon_name`)
 
             // Give player random perk
-            Core.run_custom_function("give_random_perk"),
+            // Check if player has all perks, if so, pack a punch their current weapon
+            Player.set_value("all_perks", "true"),
+            Core.for_each_run_custom_arg("perk_name", "self.perk_list", "check_perk"),
+
+            if_statement(
+                [
+                    Player.get_value("all_perks"),
+                ],
+                [
+                    // Pack a punch current weapon
+                    Player.set_value(
+                        "upgraded_weapon_name",
+                        Core.get_upgrade_weapon(Player.current_weapon, 1)
+                    ),
+                    Player.take_all_weapons(),
+                    Player.give_weapon(Player.get_value("upgraded_weapon_name")),
+                ],
+                [
+                    Core.run_custom_function("give_random_perk"),
+                ]
+            ),
+
         ],
+    },
+    {
+        name: "check_perk",
+        arguments: ["perk_name"],
+        lines: [
+            if_statement(
+                [
+                    Core.is_not(Player.has_perk("perk_name")),
+                ],
+                [
+                    Player.set_value("all_perks", "false"),
+                ]
+            ),
+        ]
     },
     {
         name: "give_random_perk",

@@ -13,6 +13,7 @@ export const powerup_list = [
 
 export type Gobblegum = {
     name: string;
+    enabled: boolean;
     identifier: string;
     description: string;
     activations: number;
@@ -26,6 +27,7 @@ export type Gobblegum = {
 export const gobblegums: Gobblegum[] = [
     {
         name: "In plain sight",
+        enabled: true,
         identifier: "in_plain_sight",
         description: "Zombies ignore the player for 10 seconds upon use.",
         activations: 2,
@@ -65,6 +67,7 @@ export const gobblegums: Gobblegum[] = [
     // NOTE: MAX AMMO DROP
     {
         name: "Resupply",
+        enabled: false,
         identifier: "resupply",
         description: "Activates a max ammo powerup (3 uses)",
         activations: 3,
@@ -80,6 +83,7 @@ export const gobblegums: Gobblegum[] = [
     // NOTE: DOUBLE POINTS DROP
     {
         name: "Multiplier",
+        enabled: false,
         identifier: "multiplier",
         description: "Activates a double points powerup (3 uses)",
         activations: 3,
@@ -95,6 +99,7 @@ export const gobblegums: Gobblegum[] = [
     // NOTE: PERK DROP
     {
         name: "Perk drop",
+        enabled: true,
         identifier: "perkdrop",
         description: "Activates a perk drop (3 uses)",
         activations: 3,
@@ -103,6 +108,23 @@ export const gobblegums: Gobblegum[] = [
             arguments: [],
             lines: [
                 Player.run_function(`maps\\mp\\zombies\\_zm_powerups::specific_powerup_drop("free_perk", ${Player.origin})`),
+                Player.set_value("gobblegum_cooldown", 10),
+            ]
+        },
+    },
+    // NOTE: PaP
+    {
+        name: "Weapon upgrade",
+        enabled: true,
+        identifier: "weapon_upgrade",
+        description: "Pack a punches the current weapon (3 uses)",
+        activations: 3,
+        activate_function: {
+            name: "gg_weapon_upgrade",
+            arguments: [],
+            lines: [
+                // TODO: Finish this
+                Player.upgrade_held_weapon(),
                 Player.set_value("gobblegum_cooldown", 10),
             ]
         },
