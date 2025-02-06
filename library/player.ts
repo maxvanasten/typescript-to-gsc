@@ -1,6 +1,6 @@
 import { Entity } from "./entity";
 
-class PlayerClass extends Entity {
+export class PlayerClass extends Entity {
     origin = "self.origin";
     health = "self.health";
     score = "self.score";
