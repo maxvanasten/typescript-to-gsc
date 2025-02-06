@@ -38,9 +38,18 @@ export class PlayerClass extends Entity {
         return [`self maps\\mp\\zombies\\_zm_perks::give_perk(${perk_name});`];
     }
 
+    /**
+     * @description Gives the player max ammo for a specific weapon
+     * @example
+     * import Player from './lib/player';
+     * import Weapons from './lib/lists/weapons';
+     * 
+     * export const init = [
+     *    Player.give_max_ammo(Weapons.mp40_zm)
+     * ]
+     */
     give_max_ammo(weapon_name: string) {
-        let output = [`self givemaxammo( ${weapon_name} );`];
-        return output;
+        return [`self givemaxammo( ${weapon_name} );`];
     }
 
     /**

@@ -1,7 +1,6 @@
 import { Entity } from "./entity";
-import Weapons from "./lists/weapons";
 
-class LevelClass extends Entity {
+export class LevelClass extends Entity {
     set_zombie_movespeed_mult(mult: number | string) {
         return [
             `maps\\mp\\zombies\\_zm_utility::set_zombie_var( "zombie_move_speed_multiplier", ${mult}, 0, 2 );`,

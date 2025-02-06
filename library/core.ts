@@ -1,114 +1,115 @@
-const Core = {
+export class CoreClass {
+    constructor() { }
     // File IO
-    testfile: (path: string) => {
+    testfile(path: string) {
         return [`fs_testfile(${path});`];
-    },
-    openfile: (path: string, mode: string, shared: boolean) => {
+    }
+    openfile(path: string, mode: string, shared: boolean) {
         return `fs_fopen(${path}, ${mode}, ${shared})`;
-    },
-    write: (file: string, text: string) => {
+    }
+    write(file: string, text: string) {
         return [`fs_write(${file}, ${text});`];
-    },
-    write_line: (file: string, text: string) => {
+    }
+    write_line(file: string, text: string) {
         return [`fs_writeline(${file}, ${text});`];
-    },
-    read_line: (file: string) => {
+    }
+    read_line(file: string) {
         return `fs_readline(${file})`;
-    },
-    read: (file: string) => {
+    }
+    read(file: string) {
         return `fs_read(${file})`;
-    },
-    close: (file: string) => {
+    }
+    close(file: string) {
         return [`fs_fclose(${file});`];
-    },
-    close_all: () => {
+    }
+    close_all() {
         return [`fs_fcloseall();`];
-    },
-    log: (text: string) => {
+    }
+    log(text: string) {
         return [`print(${text});`];
-    },
-    disable_perk_limit: () => {
+    }
+    disable_perk_limit() {
         return [`level.perk_purchase_limit = 99;`];
-    },
-    run_custom_function: (function_name: string) => {
+    }
+    run_custom_function(function_name: string) {
         return [`self ${function_name}();`];
-    },
-    run_custom_function_b: (function_name: string) => {
+    }
+    run_custom_function_b(function_name: string) {
         return `self ${function_name}()`;
-    },
-    thread_custom_function: (function_name: string) => {
+    }
+    thread_custom_function(function_name: string) {
         return [`self thread ${function_name}();`];
-    },
-    run_threaded_function_on_entity: (func_call: string, entity: string) => {
+    }
+    run_threaded_function_on_entity(func_call: string, entity: string) {
         return [`${entity} thread ${func_call};`];
-    },
-    pre_cache_model: (model: string) => {
+    }
+    pre_cache_model(model: string) {
         return [`precacheModel(${model});`];
-    },
-    wait: (time: number | string) => {
+    }
+    wait(time: number | string) {
         return [`wait ${time};`];
-    },
-    return: (value: number | string) => {
+    }
+    return(value: number | string) {
         return [`return ${value};`];
-    },
-    replace_function_with_custom: (
+    }
+    replace_function_with_custom(
         default_function_path: string,
         custom_function_name: string
-    ) => {
+    ) {
         return [
             `replaceFunc(${default_function_path}, ::${custom_function_name});`,
         ];
-    },
-    set_local_variable: (variable_name: string, value: number | string) => {
+    }
+    set_local_variable(variable_name: string, value: number | string) {
         return [`${variable_name} = ${value};`];
-    },
-    is_not: (value: number | string) => {
+    }
+    is_not(value: number | string) {
         return `!${value}`;
-    },
-    raw: (line: string) => {
+    }
+    raw(line: string) {
         return [`${line};`];
-    },
-    self_ent_flag: (flag_name: string) => {
+    }
+    self_ent_flag(flag_name: string) {
         return `self maps\\mp\\zombies\\_zm_utility::ent_flag("${flag_name}")`;
-    },
-    for_each_run_custom: (
+    }
+    for_each_run_custom(
         name: string,
         obj: string,
         custom_function_name: string
-    ) => {
+    ) {
         return [
             `foreach (${name} in ${obj})`,
             `{`,
             `\t${name} ${custom_function_name}();`,
             `}`,
         ];
-    },
-    for_each_run_custom_arg: (
+    }
+    for_each_run_custom_arg(
         name: string,
         obj: string,
         custom_function_name: string
-    ) => {
+    ) {
         return [
             `foreach (${name} in ${obj})`,
             `{`,
             `\t${custom_function_name}(${name});`,
             `}`,
         ];
-    },
-    get_upgrade_weapon: (weapon_name: string, add_attachment?: 0 | 1) => {
+    }
+    get_upgrade_weapon(weapon_name: string, add_attachment?: 0 | 1) {
         if (!add_attachment) add_attachment = 0;
 
         return `maps\\mp\\zombies\\_zm_weapons::get_upgrade_weapon(${weapon_name}, ${add_attachment})`;
-    },
-    include_weapon: (weapon_name: string, in_box: boolean) => {
+    }
+    include_weapon(weapon_name: string, in_box: boolean) {
         let in_box_n = 0;
         if (in_box) in_box_n = 1;
 
         return [
             `maps\\mp\\zombies\\_zm_utility::include_weapon(${weapon_name}, ${in_box_n});`,
         ];
-    },
-    add_zombie_weapon: (
+    }
+    add_zombie_weapon(
         default_weapon_name: string,
         upgraded_weapon_name: string,
         hint: string,
@@ -117,35 +118,33 @@ const Core = {
         weaponvoresp: string,
         ammo_cost: number | undefined,
         create_vox: number
-    ) => {
+    ) {
         return [
             `maps\\mp\\zombies\\_zm_weapons::add_zombie_weapon(${default_weapon_name}, ${upgraded_weapon_name}, ${hint}, ${cost}, ${weaponvo}, ${weaponvoresp}, ${ammo_cost}, ${create_vox});`,
         ];
-    },
-    run_function_on_entity: (func_call: string, entity: string) => {
+    }
+    run_function_on_entity(func_call: string, entity: string) {
         return [`${entity} ${func_call};`];
-    },
-    random_from_array: (array_name: string) => {
+    }
+    random_from_array(array_name: string) {
         return `random(${array_name})`;
-    },
+    }
 
-    make_local_struct: (name: string) => {
+    make_local_struct(name: string) {
         return [`${name} = spawnstruct();`];
-    },
-    add_to_struct: (
+    }
+    add_to_struct(
         struct_name: string,
         key: string,
         value: string | number
-    ) => {
+    ) {
         return [`${struct_name}.${key} = ${value};`];
-    },
-    map_name: `tolower(getdvar(#"mapname"))`,
-    spawn: (entity: string, x: number, y: number, z: number) => {
+    }
+    map_name = `tolower(getdvar(#"mapname"))`
+    spawn(entity: string, x: number, y: number, z: number) {
         return `spawn(${entity}, (${x}, ${y}, ${z}))`;
     }
 };
-
-export default Core;
 
 export const switch_statement = (
     key: string,
@@ -271,3 +270,5 @@ export const while_loop = (conditions: string[], true_function: string[][]) => {
 
     return output;
 };
+
+export default new CoreClass();
