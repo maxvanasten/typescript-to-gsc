@@ -67,7 +67,7 @@ export const gobblegums: Gobblegum[] = [
     // NOTE: MAX AMMO DROP
     {
         name: "Resupply",
-        enabled: false,
+        enabled: true,
         identifier: "resupply",
         description: "Activates a max ammo powerup (3 uses)",
         activations: 3,
@@ -83,7 +83,7 @@ export const gobblegums: Gobblegum[] = [
     // NOTE: DOUBLE POINTS DROP
     {
         name: "Multiplier",
-        enabled: false,
+        enabled: true,
         identifier: "multiplier",
         description: "Activates a double points powerup (3 uses)",
         activations: 3,

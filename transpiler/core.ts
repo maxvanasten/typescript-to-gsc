@@ -6,13 +6,13 @@ import ts_gsc_config from "../config";
 import { TEMPLATE } from "./template";
 
 const clean_output_folder = () => {
-    if (fs.existsSync("./scripts/output/mp"))
-        fs.rmSync("./scripts/output/mp", { recursive: true, force: true });
-    if (fs.existsSync("./scripts/output/zm"))
-        fs.rmSync("./scripts/output/zm", { recursive: true, force: true });
+    if (fs.existsSync("./output/scripts/mp"))
+        fs.rmSync("./output/scripts/mp", { recursive: true, force: true });
+    if (fs.existsSync("./output/scripts/zm"))
+        fs.rmSync("./output/scripts/zm", { recursive: true, force: true });
 
-    fs.mkdirSync("./scripts/output/mp");
-    fs.mkdirSync("./scripts/output/zm");
+    fs.mkdirSync("./output/scripts/mp");
+    fs.mkdirSync("./output/scripts/zm");
 
     const zombie_maps = [
         "zm_tomb",
@@ -23,18 +23,51 @@ const clean_output_folder = () => {
     ];
 
     zombie_maps.forEach((zombie_map) => {
-        if (!fs.existsSync(`./scripts/output/zm/${zombie_map}`))
-            fs.mkdirSync(`./scripts/output/zm/${zombie_map}`);
+        if (!fs.existsSync(`./output/scripts/zm/${zombie_map}`))
+            fs.mkdirSync(`./output/scripts/zm/${zombie_map}`);
     });
 };
+
+const build_mods = () => {
+    // Clean mod folder
+    if (fs.existsSync("./output/mods")) fs.rmSync("./output/mods", { recursive: true, force: true });
+    fs.mkdirSync("./output/mods");
+    ts_gsc_config.mods.forEach((mod) => {
+        console.log(`[MOD] Building ${mod.name}`);
+        console.time(`${mod.name}_built`);
+
+        // Create mod folder
+        fs.mkdirSync(`./output/mods/${mod.name}`);
+        // Create mod info file
+        const info = {
+            name: mod.name,
+            author: mod.author,
+            description: mod.description,
+            version: mod.version,
+        }
+        fs.writeFileSync(`./output/mods/${mod.name}/mod.json`, JSON.stringify(info));
+        // Create mod scripts folder
+        fs.mkdirSync(`./output/mods/${mod.name}/scripts`);
+
+        mod.scripts.forEach((script) => {
+            // Get script from config file
+            const target = ts_gsc_config.scripts.find((target) => target.name === script);
+            if (!target) return console.error(`Couldn't find script ${script} in targets.`);
+            // Copy output file to mod folder
+            fs.copyFileSync(`./output/scripts/${target.output_file}`, `./output/mods/${mod.name}/scripts/${script}.gsc`);
+        });
+
+        console.log(`[MOD] ${mod.name} built successfully.`);
+        console.timeEnd(`${mod.name}_built`);
+    });
+}
 
 console.time("ts_gsc_complete");
 let targets_finished = 0;
 
 if (ts_gsc_config.clean_output_folder) clean_output_folder();
 
-ts_gsc_config.targets.forEach((target) => {
-    if (!target.enable) return console.warn(`Skipping target ${target.name}`);
+ts_gsc_config.scripts.forEach((target) => {
     let target_files_loaded: number = 0;
 
     let include_files: string[] = [];
@@ -72,8 +105,7 @@ ts_gsc_config.targets.forEach((target) => {
                 );
                 if (target_files_loaded == target.input_files.length) {
                     targets_finished++;
-                    if (targets_finished == ts_gsc_config.targets.length)
-                        console.timeEnd("ts_gsc_complete");
+
                     transpile(
                         target.name,
                         target.output_file,
@@ -82,6 +114,11 @@ ts_gsc_config.targets.forEach((target) => {
                         update_functions,
                         custom_functions
                     );
+                    if (targets_finished == ts_gsc_config.scripts.length)
+                        console.timeEnd("ts_gsc_complete");
+                    setTimeout(() => {
+                        build_mods();
+                    }, 1000);
                 }
             })
             .catch((err) => {
@@ -100,6 +137,7 @@ const transpile = (
     custom: { name: string; lines: string[][]; arguments?: string[] }[]
 ) => {
     console.time(`transpiling_target_${name}`);
+    output_file = `./output/scripts/${output_file}`;
     // Remove duplicate includes
     includes = [...new Set(includes)];
 

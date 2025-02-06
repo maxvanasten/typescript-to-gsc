@@ -1,71 +1,80 @@
 const ts_gsc_config = {
     clean_output_folder: true,
-    targets: [
+    storage_folder: "C:\\Users\\max\\AppData\\Local\\Plutonium\\storage\\t6",
+    mods: [
+        {
+            name: "zm_tomb_challenge",
+            scripts: ["origins-spawnroom-challenge", "gobblegums", "health-and-zombie-counter"],
+            author: "HasjBlok",
+            description: "Origins spawnroom challenge with gobblegums and health counter",
+            version: "1.0",
+        },
+        {
+            name: "zm_tomb_improved",
+            scripts: ["health-and-zombie-counter", "origins-bank", "gobblegums"],
+            author: "HasjBlok",
+            description: "Origins with a bank, gobblegums and health/zombie counter",
+            version: "1.0"
+        }
+    ],
+    scripts: [
         {
             name: "health-and-zombie-counter",
-            enable: true,
-            output_file: "./scripts/output/zm/health_and_zombie_counter.gsc",
+            output_file: "zm/health_and_zombie_counter.gsc",
             input_files: [
-                "./scripts/src/zm/health_counter/main.ts",
-                "./scripts/src/zm/zombie_counter/main.ts",
+                "./input/scripts/zm/health_counter/main.ts",
+                "./input/scripts/zm/zombie_counter/main.ts",
             ],
         },
         {
             name: 'zm-quests',
-            enable: false,
-            output_file: './scripts/output/zm/zm_quests.gsc',
+            output_file: 'zm/zm_quests.gsc',
             input_files: [
-                './scripts/src/zm/zm_quests/main.ts'
+                './input/scripts/zm/zm_quests/main.ts'
             ]
         },
         {
             name: "origins-spawnroom-challenge",
-            enable: false,
             output_file:
-                "./scripts/output/zm/zm_tomb/origins_spawnroom_challenge.gsc",
+                "zm/zm_tomb/origins_spawnroom_challenge.gsc",
             input_files: [
                 // Main logic
-                "./scripts/src/zm/origins_spawnroom/main.ts",
+                "./input/scripts/zm/origins_spawnroom/main.ts",
                 // Hud element
-                "./scripts/src/zm/origins_spawnroom/hud.ts",
+                "./input/scripts/zm/origins_spawnroom/hud.ts",
                 // Random perk from generator script
-                "./scripts/src/zm/origins_generator_challenge/main.ts",
+                "./input/scripts/zm/origins_generator_challenge/main.ts",
             ],
         },
         {
             name: "motd-wolf-counter",
-            enable: false,
-            output_file: "./scripts/output/zm/zm_prison/wolf-counter.gsc",
-            input_files: ["./scripts/src/zm/motd_wolf_counter/main.ts"],
+            output_file: "zm/zm_prison/wolf-counter.gsc",
+            input_files: ["./input/scripts/zm/motd_wolf_counter/main.ts"],
         },
         {
             name: "dev-tools",
-            enable: false,
-            output_file: "./scripts/output/zm/dev-tools.gsc",
-            input_files: ["./scripts/src/zm/dev_tools/origin_display.ts"],
+            output_file: "zm/dev-tools.gsc",
+            input_files: ["./input/scripts/zm/dev_tools/origin_display.ts"],
         },
         {
             name: "custom-mystery-box",
-            enable: false,
-            output_file: "./scripts/output/zm/custom-mystery-box.gsc",
-            input_files: ["./scripts/src/zm/custom_mystery_box/main.ts"],
+            output_file: "zm/custom-mystery-box.gsc",
+            input_files: ["./input/scripts/zm/custom_mystery_box/main.ts"],
         },
         {
             name: "gobblegums",
-            enable: false,
-            output_file: "./scripts/output/zm/gobblegums.gsc",
+            output_file: "zm/gobblegums.gsc",
             input_files: [
-                "./scripts/src/zm/gobblegums/main.ts",
-                "./scripts/src/zm/gobblegums/hud.ts",
+                "./input/scripts/zm/gobblegums/main.ts",
+                "./input/scripts/zm/gobblegums/hud.ts",
             ],
         },
         {
             name: "origins-bank",
-            enable: false,
-            output_file: "./scripts/output/zm/zm_tomb/origins_bank.gsc",
+            output_file: "zm/zm_tomb/origins_bank.gsc",
             input_files: [
-                "./scripts/src/zm/origins_bank/main.ts",
-                //"./scripts/src/zm/origins_bank/hud.ts",
+                "./input/scripts/zm/origins_bank/main.ts",
+                //"./input/scripts/zm/origins_bank/hud.ts",
             ],
         },
     ],

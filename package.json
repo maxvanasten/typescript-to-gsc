@@ -5,25 +5,15 @@
 	"main": "transpiler/core.ts",
 	"scripts": {
 		"dev-tools:generate-documentation": "npx typedoc ./library --cleanOutputDir false --entryPointStrategy Expand --name typescript-to-gsc --out ./documentation --readme ./README.md",
-		"transpile": "ts-node ./transpiler/core.ts",
+		"dev-tools:transpile": "ts-node ./transpiler/core.ts",
+		"dev-tools:full-build": "npm run dev-tools:transpile && npm run dev-tools:generate-documentation",
+		"helpers:sync-mods": "ts-node ./helpers/sync_mods.ts",
+		"helpers:sync-scripts": "ts-node ./helpers/sync_scripts.ts",
+		"helpers:sync-all": "npm run helpers:sync-mods && npm run helpers:sync-scripts",
 
-		"dev-tools:full-build": "npm run transpile && npm run dev-tools:generate-documentation",
-		"dev-tools:move-scripts": "cp -r ./scripts/output/* C:/Users/max/AppData/Local/Plutonium/storage/t6/scripts/",
-
-		"dev-tools:clean-server": "rm -rf C:/Users/max/Documents/GitHub/t6z-revived/scripts/*",
-		"dev-tools:move-to-server": "cp -r ./scripts/output/* C:/Users/max/Documents/GitHub/t6z-revived/scripts/",
-		"dev-tools:update-server": "npm run transpile && npm run dev-tools:clean-server && npm run dev-tools:move-to-server",
-
-		"dev-tools:delete-existing-scripts": "rm -rf C:/Users/max/AppData/Local/Plutonium/storage/t6/scripts/*",
-		"dev-tools:sync-game": "npm run dev-tools:delete-existing-scripts && npm run dev-tools:move-scripts",
-
-		"dev-tools:update-local": "npm run transpile && npm run dev-tools:sync-game",
-		"dev-tools:update-with-doc": "npm run dev-tools:full-build && npm run dev-tools:sync-game",
-
-		"dev-tools:clean-release": "rm -rf ./releases/pre-release/*",
-		"dev-tools:prepare-release-files": "cp -r ./transpiler ./releases/pre-release/ && cp -r ./scripts ./releases/pre-release/ && cp -r ./library ./releases/pre-release/ && cp config.ts ./releases/pre-release/ && cp package.json ./releases/pre-release/ && cp tsconfig.json ./releases/pre-release/",
-
-		"dev-tools:pre-release": "npm run dev-tools:update-with-doc && npm run dev-tools:clean-release && npm run dev-tools:prepare-release-files"
+		"dev-tools:build-and-sync-all": "npm run dev-tools:transpile && npm run helpers:sync-all",
+		"dev-tools:build-and-sync-mods": "npm run dev-tools:transpile && npm run helpers:sync-mods",
+		"dev-tools:build-and-sync-scripts": "npm run dev-tools:transpile && npm run helpers:sync-scripts"
 	},
 	"repository": {
 		"type": "git",
