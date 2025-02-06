@@ -77,6 +77,11 @@ const ts_gsc_config = {
                 //"./input/scripts/zm/origins_bank/hud.ts",
             ],
         },
+        {
+            name: "file-test",
+            output_file: "zm/file-test.gsc",
+            input_files: ["./input/scripts/zm/file_test/main.ts"],
+        }
     ],
 };
 

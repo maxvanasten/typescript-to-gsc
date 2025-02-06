@@ -7,4 +7,4 @@ if (fs.existsSync(`${path}/mods`)) fs.rmdirSync(`${path}/mods`, { recursive: tru
 if (fs.existsSync(`${path}/scripts`)) fs.rmdirSync(`${path}/scripts`, { recursive: true });
 
 fs.mkdirSync(`${path}/mods`);
-fs.cpSync("./mods", `${path}/mods`, { recursive: true });
+fs.cpSync("./output/mods", `${path}/mods`, { recursive: true });

@@ -1,4 +1,29 @@
 const Core = {
+    // File IO
+    testfile: (path: string) => {
+        return [`fs_testfile(${path});`];
+    },
+    openfile: (path: string, mode: string, shared: boolean) => {
+        return `fs_fopen(${path}, ${mode}, ${shared})`;
+    },
+    write: (file: string, text: string) => {
+        return [`fs_write(${file}, ${text});`];
+    },
+    write_line: (file: string, text: string) => {
+        return [`fs_writeline(${file}, ${text});`];
+    },
+    read_line: (file: string) => {
+        return `fs_readline(${file})`;
+    },
+    read: (file: string) => {
+        return `fs_read(${file})`;
+    },
+    close: (file: string) => {
+        return [`fs_fclose(${file});`];
+    },
+    close_all: () => {
+        return [`fs_fcloseall();`];
+    },
     log: (text: string) => {
         return [`print(${text});`];
     },
@@ -7,6 +32,9 @@ const Core = {
     },
     run_custom_function: (function_name: string) => {
         return [`self ${function_name}();`];
+    },
+    run_custom_function_b: (function_name: string) => {
+        return `self ${function_name}()`;
     },
     thread_custom_function: (function_name: string) => {
         return [`self thread ${function_name}();`];
