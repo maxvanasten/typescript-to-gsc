@@ -1,30 +1,105 @@
 export class CoreClass {
     constructor() { }
-    // File IO
-    testfile(path: string) {
-        return [`fs_testfile(${path});`];
+
+    /**
+     * @description Returns true if the file exists, false otherwise
+     * @param path Path to the file
+     * @returns True if exists, false otherwise
+     */
+    fs_testfile(path: string) {
+        return `fs_testfile(${path})`;
     }
-    openfile(path: string, mode: string, shared: boolean) {
-        return `fs_fopen(${path}, ${mode}, ${shared})`;
+
+    /**
+     * @description Delete a file, returns true if succesful, false otherwise.
+     * @param path Path to the file
+     * @param use_global Use global scriptdata folder
+     * @returns True if succesful, false otherwise
+     */
+    fs_remove(path: string, use_global?: boolean) {
+        if (!use_global) use_global = false;
+
+        return `fs_remove(${path}, ${use_global})`;
     }
-    write(file: string, text: string) {
-        return [`fs_write(${file}, ${text});`];
-    }
-    write_line(file: string, text: string) {
-        return [`fs_writeline(${file}, ${text});`];
-    }
-    read_line(file: string) {
-        return `fs_readline(${file})`;
-    }
-    read(file: string) {
-        return `fs_read(${file})`;
-    }
-    close(file: string) {
-        return [`fs_fclose(${file});`];
-    }
-    close_all() {
+
+    /**
+     * @description Close all open files
+     */
+    fs_closeall() {
         return [`fs_fcloseall();`];
     }
+
+    /**
+     * @description Opens a file, returns 0 if failed.
+     * @param path Path to file
+     * @param mode File mode
+     * @param use_global Use global scriptdata folder
+     * @returns File object
+     */
+    fs_open(path: string, mode: "write" | "read" | "append", use_global?: boolean) {
+        if (!use_global) use_global = false;
+
+        return `fs_fopen(${path}, "${mode}", ${use_global})`;
+    }
+
+    /**
+     * @description Closes a file
+     * @param file File object to close
+     */
+    fs_close(file: string) {
+        return [`fs_fclose(${file});`];
+    }
+
+    /**
+     * 
+     * @param file File object to read line from
+     * @returns String or undefined if no lines left to read
+     */
+    fs_readline(file: string) {
+        return `fs_readline(${file})`;
+    }
+
+    /**
+     * @description Reads the file
+     * @param file File object to read
+     * @param bytes Optional number of bytes to read
+     * @returns 
+     */
+    fs_read(file: string, bytes?: number) {
+        if (!bytes) return `fs_read(${file})`;
+
+        return `fs_read(${file}, ${bytes})`;
+    }
+
+    /**
+     * @description Writes to a file, appends a newline character
+     * @param file File object to write to
+     * @param content Content to write to file object
+     * @returns true if succesful, false otherwise
+     */
+    fs_writeline(file: string, content: string) {
+        return `fs_writeline(${file}, ${content})`;
+    }
+
+    /**
+     * @description Writes to a file, no newline character
+     * @param file File object to write to
+     * @param content Content to write to file object
+     * @returns true if succesful, false otherwise
+     */
+    fs_write(file: string, content: string) {
+        return `fs_write(${file}, ${content})`;
+    }
+
+    /**
+     * @description List files in a folder
+     * @param folder Folder to list files from
+     * @returns string[] A list of files inside of the folder
+     */
+    fs_listfiles(folder: string) {
+        return `fs_listfiles(${folder})`;
+    }
+
     log(text: string) {
         return [`print(${text});`];
     }
