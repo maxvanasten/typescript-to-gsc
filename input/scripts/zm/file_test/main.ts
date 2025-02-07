@@ -1,12 +1,8 @@
-import Core from "../../../../library/core";
 
 export const include_files = [
 ];
 
 export const init_functions = [
-    Core.set_local_variable(`file`, Core.openfile(`"test.txt"`, `"write"`, true)),
-    Core.write(`file`, `"Hello World!"`),
-    Core.close(`file`),
 ];
 
 export const custom_functions = [

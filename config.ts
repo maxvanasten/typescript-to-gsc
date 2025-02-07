@@ -74,7 +74,7 @@ const ts_gsc_config = {
             output_file: "zm/zm_tomb/origins_bank.gsc",
             input_files: [
                 "./input/scripts/zm/origins_bank/main.ts",
-                //"./input/scripts/zm/origins_bank/hud.ts",
+                "./input/scripts/zm/origins_bank/hud.ts",
             ],
         },
         {

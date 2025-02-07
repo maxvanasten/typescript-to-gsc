@@ -1,4 +1,4 @@
-import Core, { if_statement } from "../../../../library/core";
+import Core from "../../../../library/core";
 import HudElement, { Font, Point } from "../../../../library/hud_element";
 
 const hud_x = -225;
@@ -21,7 +21,7 @@ export const custom_functions = [
     {
         name: "update_hud_bank_balance",
         lines: [
-            bank_balance_hud.update(`self.account_value * 1000`),
+            bank_balance_hud.update(`self.hb_bank_balance`),
             Core.wait(0.5),
         ],
     },

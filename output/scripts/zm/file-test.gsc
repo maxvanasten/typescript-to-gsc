@@ -31,9 +31,6 @@ onPlayerSpawned()
 ttg_init()
 {
 	self iPrintLn("[^2file-test^7] This script was made using ts_gsc, the TypeScript to GSC transpiler! (^5https://github.com/maxvanasten/ts_gsc^7)");
-	file = fs_fopen("test.txt", "write", true);
-	fs_write(file, "Hello World!");
-	fs_fclose(file);
 }
 
 ttg_update()

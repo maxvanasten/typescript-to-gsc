@@ -94,27 +94,25 @@ export const custom_functions = [
     {
         name: "save_stats",
         lines: [
-            Player.run_function(
-                `maps\\mp\\zombies\\_zm_stats::set_map_stat("depositBox", self.account_value, "zm_transit")`
-            ),
-            Player.run_function(`uploadleaderboards()`),
-            Player.run_function(
-                `maps\\mp\\zombies\\_zm_stats::uploadstatssoon()`
-            ),
+            Core.set_local_variable("hb_bank_file", Core.fs_open(`"hb_bank_balance.txt"`, "write")),
+            if_statement([`self.hb_bank_balance == undefined`], [Player.set_value("hb_bank_balance", 0)]),
+            Core.set_local_variable("result", Core.fs_write("hb_bank_file", `self.hb_bank_balance`)),
+            Player.i_print_ln_bold(`"RESULT: "+result`),
+            Core.fs_close("hb_bank_file")
         ],
     },
     {
         name: "withdraw",
         lines: [
             if_statement(
-                [`self.account_value >= 1`],
+                [`self.hb_bank_balance >= 1000`],
                 [
                     Player.increment_value("score", 1000),
-                    Player.decrement_value("account_value", 1),
+                    Player.decrement_value("hb_bank_balance", 1000),
                     Player.i_print_ln_bold(
-                        `"Withdrawn 1000 points. (Balance: "+(self.account_value*1000)+")"`
+                        `"Withdrawn 1000 points. (Balance: "+self.hb_bank_balance+")"`
                     ),
-                    Core.run_custom_function("save_stats"),
+                    Player.run_function("save_stats()"),
                 ],
                 [Player.i_print_ln_bold(`"Not enough points."`)]
             ),
@@ -127,11 +125,11 @@ export const custom_functions = [
                 [`self.score >= 1000`],
                 [
                     Player.decrement_value("score", 1000),
-                    Player.increment_value("account_value", 1),
+                    Player.increment_value("hb_bank_balance", 1000),
                     Player.i_print_ln_bold(
-                        `"Deposited 1000 points. (Balance: "+(self.account_value*1000)+")"`
+                        `"Deposited 1000 points. (Balance: "+self.hb_bank_balance+")"`
                     ),
-                    Core.run_custom_function("save_stats"),
+                    Player.run_function("save_stats()"),
                 ],
                 [Player.i_print_ln_bold(`"Not enough points."`)]
             ),
@@ -140,6 +138,11 @@ export const custom_functions = [
 ];
 
 export const init_functions = [
+    Core.set_local_variable("hb_bank_file", Core.fs_open(`"hb_bank_balance.txt"`, "read")),
+    Player.set_value("hb_bank_balance", Core.fs_read("hb_bank_file")),
+    if_statement([`self.hb_bank_balance == undefined`], [Player.set_value("hb_bank_balance", 0)]),
+    Core.raw(`${Core.fs_remove(`"hb_bank_balance.txt"`)};\n`),
+
     Level.thread("setup_bank_deposit()"),
     Level.thread("setup_bank_withdrawal()"),
     Player.set_value(
