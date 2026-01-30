@@ -15,6 +15,13 @@ const ts_gsc_config = {
             author: "HasjBlok",
             description: "Origins with a bank, gobblegums and health/zombie counter",
             version: "1.0"
+        },
+        {
+            name: "upgrade_shop_test",
+            scripts: ["upgrade-shop"],
+            author: "Alfred",
+            description: "Test mod for upgrade shop - adds purchase locations across maps",
+            version: "1.0"
         }
     ],
     scripts: [
@@ -81,6 +88,11 @@ const ts_gsc_config = {
             name: "file-test",
             output_file: "zm/file-test.gsc",
             input_files: ["./input/scripts/zm/file_test/main.ts"],
+        },
+        {
+            name: "upgrade-shop",
+            output_file: "zm/upgrade_shop.gsc",
+            input_files: ["./input/scripts/zm/upgrade_shop/main.ts"],
         }
     ],
 };
