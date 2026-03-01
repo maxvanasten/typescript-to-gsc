@@ -10,7 +10,6 @@
 		"helpers:sync-mods": "ts-node ./helpers/sync_mods.ts",
 		"helpers:sync-scripts": "ts-node ./helpers/sync_scripts.ts",
 		"helpers:sync-all": "npm run helpers:sync-mods && npm run helpers:sync-scripts",
-
 		"dev-tools:build-and-sync-all": "npm run dev-tools:transpile && npm run helpers:sync-all",
 		"dev-tools:build-and-sync-mods": "npm run dev-tools:transpile && npm run helpers:sync-mods",
 		"dev-tools:build-and-sync-scripts": "npm run dev-tools:transpile && npm run helpers:sync-scripts"
@@ -29,7 +28,7 @@
 		"ts-node": "^10.9.2"
 	},
 	"devDependencies": {
-		"@types/node": "^20.11.19",
+		"@types/node": "^20.19.30",
 		"typedoc": "^0.25.8"
 	}
 }
